@@ -10,9 +10,7 @@ function Dashboard() {
 
   return (
     <OButton
-      color="blue"
-      title="Click me"
-      border="none"
+      title="Ir al login"
       onClick={() => navigate("/login")}
     />
   );

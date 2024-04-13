@@ -1,40 +1,34 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import OButton from '@/components/OButton';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import InputAdornment from '@mui/material/InputAdornment';
-import PersonIcon from '@mui/icons-material/Person';
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import FormControl from '@mui/material/FormControl';
-import LockIcon from '@mui/icons-material/Lock';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
+import OTextField from '/src/components/OTextField';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
+      {'Copyright © OnHealthLine '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
-const defaultTheme = createTheme();
+
+const MainBox = styled(Box)({
+  border: '2px solid black',
+  borderRadius: '10px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '20px',
+  backgroundColor: 'white',
+});
 
 export default function SignIn() {
   const handleSubmit = (event) => {
@@ -46,109 +40,71 @@ export default function SignIn() {
     });
   };
 
-  const [showPassword, setShowPassword] = React.useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  React.useEffect(() => {
+    document.body.style.margin = '0';
+    document.body.style.padding = '0';
+  }, []);
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Nombre de usuario"
-              placeholder="Ingresa tu nombre de usuario"
-              name="email"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PersonIcon />
-                  </InputAdornment>
-                ),
-              }}
-              autoComplete="email"
-              autoFocus
-            />
-            
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Contraseña"
-              placeholder="Ingresa tu contraseña"
-              type={showPassword ? 'text' : 'password'}
-              id="password"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LockIcon />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position="start">
-                    <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                  >{showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Recordar cuenta"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Iniciar sesión
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  ¿Olvidaste tu contraseña?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"¿No tienes una cuenta? Regístrate"}
-                </Link>
-              </Grid>
+    <Box
+      backgroundColor={'#e6f9f6'}
+      display={'flex'}
+      alignItems={'center'}
+      justifyContent={'center'}
+      width={'100vw'}
+      height={'100vh'}
+      overflow={'hidden'}
+    >
+      <MainBox>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
+        <Grid container width={'25vw'} direction={'column'} alignItems='center' marginTop={1} component={'form'} onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <OTextField
+        placeholder="Ingresa tu nombre de usuario"
+        focusedColor="#2376a1"
+        topLabel="Nombre de usuario"
+        width="100%"
+        inputType="username"
+        name="username"
+        required
+        id="username"
+        autoComplete="username"
+        autoFocus
+      />
+      <OTextField
+        placeholder="Ingresa tu contraseña"
+        focusedColor="#2376a1"
+        topLabel="Contraseña"
+        width="100%"
+        inputType="password"
+        name="password"
+        required
+        id="password"
+        autoComplete="current-password"
+      />
+          <OButton
+            title="Iniciar sesión"
+          />
+          <Grid container direction={'column'} alignItems='center' spacing={1} marginTop={1}>
+            <Grid item xs>
+              <Typography variant="body2">
+                ¿Olvidaste tu contraseña? <Link href="#" color="#2376a1">Recupérala aquí</Link>
+              </Typography>
             </Grid>
-          </Box>
-        </Box>
+            <Grid item xs>
+              <Typography variant="body2">
+                ¿No tienes una cuenta? <Link href="#" color="#2376a1">Regístrate aquí</Link>
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+
         <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
-    </ThemeProvider>
+      </MainBox>
+    </Box>
   );
 }
