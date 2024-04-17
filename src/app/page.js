@@ -1,30 +1,52 @@
 'use client'
+import * as React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import OButton from "@/components/OButton";
 import { useNavigate } from "react-router-dom";
-import Login from "/src/app/login/login.js";
-import Register from "/src/app/register/register.js";
-
-function Dashboard() {
-  const navigate = useNavigate();
-
-  return (
-    <OButton
-      title="Ir al login"
-      onClick={() => navigate("/login")}
-    />
-  );
-}
+import Home from './home';
+import Login from './login/login';
+import Register from "./register/register";
+import OAppBar from '@/components/OAppBar';
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Dashboard />} /> {/* Home route */}
-        <Route path="/login" element={<Login />} /> {/* Login route */}
-        <Route path="/register" element={<Register />} /> {/* Register route */}
-      </Routes>
+      <Content />
     </BrowserRouter>
+  );
+}
+
+function Content() {
+  const [showLoginButton, setShowLoginButton] = React.useState(true);
+  const navigate = useNavigate();
+
+  const handleMenuClick = () => {
+    navigate('/');
+    setShowLoginButton(true);
+  };
+
+  const handleLoginClick = () => {
+    navigate('/login');
+    setShowLoginButton(false);
+  };
+
+  React.useEffect(() => {
+    document.body.style.margin = '0';
+    document.body.style.padding = '0';
+  }, []);
+
+  return (
+    <>
+      <OAppBar 
+        onMenuClick={handleMenuClick} 
+        onLoginClick={handleLoginClick} 
+        showLoginButton={showLoginButton} 
+      />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </>
   );
 }
 

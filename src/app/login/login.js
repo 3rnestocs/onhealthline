@@ -1,13 +1,8 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import OButton from '@/components/OButton';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-import OTextField from '/src/components/OTextField';
+import OTextField from '@/components/OTextField';
+import { AppBar, Avatar, Box, Button, Grid, IconButton, Link, Toolbar, Typography, styled } from '@mui/material';
+import { LockOutlined as LockOutlinedIcon, Menu as MenuIcon } from '@mui/icons-material';
 
 function Copyright(props) {
   return (
@@ -28,6 +23,7 @@ const MainBox = styled(Box)({
   justifyContent: 'center',
   padding: '20px',
   backgroundColor: 'white',
+  margin: 'auto'
 });
 
 export default function SignIn() {
@@ -40,19 +36,16 @@ export default function SignIn() {
     });
   };
 
-  React.useEffect(() => {
-    document.body.style.margin = '0';
-    document.body.style.padding = '0';
-  }, []);
-
   return (
+    <>
+
     <Box
       backgroundColor={'#e6f9f6'}
       display={'flex'}
       alignItems={'center'}
-      justifyContent={'center'}
+      justifyContent={'flex-start'}
       width={'100vw'}
-      height={'100vh'}
+      height={'93vh'}
       overflow={'hidden'}
     >
       <MainBox>
@@ -103,8 +96,9 @@ export default function SignIn() {
           </Grid>
         </Grid>
 
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Copyright sx={{ mt: 8 }} />
       </MainBox>
     </Box>
+      </>
   );
 }
