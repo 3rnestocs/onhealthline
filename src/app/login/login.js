@@ -1,8 +1,11 @@
 import * as React from 'react';
-import OButton from '@/components/OButton';
-import OTextField from '@/components/OTextField';
-import { AppBar, Avatar, Box, Button, Grid, IconButton, Link, Toolbar, Typography, styled } from '@mui/material';
-import { LockOutlined as LockOutlinedIcon, Menu as MenuIcon } from '@mui/icons-material';
+import PropTypes from 'prop-types';
+import { Box, Typography, styled, Tabs, Tab } from '@mui/material';
+import SwipeableViews from 'react-swipeable-views';
+import { useTheme } from '@mui/material/styles';
+import SickIcon from '@mui/icons-material/Sick';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import PacienteLogin from './pacienteLogin';
 
 function Copyright(props) {
   return (
@@ -14,91 +17,131 @@ function Copyright(props) {
   );
 }
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `full-width-tab-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`,
+  };
+}
+
 const MainBox = styled(Box)({
   border: '2px solid black',
   borderRadius: '10px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
   padding: '20px',
   backgroundColor: 'white',
-  margin: 'auto'
+  margin: 'auto',
+  minWidth: '30%',
+  minHeight: '60%',
 });
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
 
-  return (
-    <>
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
+  const theme = useTheme();
 
+  const appbarHeight = 64;
+  const containerHeight = window.innerHeight - appbarHeight;
+
+  return (
     <Box
       backgroundColor={'#e6f9f6'}
       display={'flex'}
       alignItems={'center'}
       justifyContent={'flex-start'}
-      width={'100vw'}
-      height={'93vh'}
+      width={'100%'}
+      height={`${containerHeight}px`}
       overflow={'hidden'}
     >
       <MainBox>
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
-        <Grid container width={'25vw'} direction={'column'} alignItems='center' marginTop={1} component={'form'} onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        <OTextField
-        placeholder="Ingresa tu nombre de usuario"
-        focusedColor="#2376a1"
-        topLabel="Nombre de usuario"
-        width="100%"
-        inputType="username"
-        name="username"
-        required
-        id="username"
-        autoComplete="username"
-        autoFocus
-      />
-      <OTextField
-        placeholder="Ingresa tu contraseña"
-        focusedColor="#2376a1"
-        topLabel="Contraseña"
-        width="100%"
-        inputType="password"
-        name="password"
-        required
-        id="password"
-        autoComplete="current-password"
-      />
-          <OButton
-            title="Iniciar sesión"
-          />
-          <Grid container direction={'column'} alignItems='center' spacing={1} marginTop={1}>
-            <Grid item xs>
-              <Typography variant="body2">
-                ¿Olvidaste tu contraseña? <Link href="#" color="#2376a1">Recupérala aquí</Link>
-              </Typography>
-            </Grid>
-            <Grid item xs>
-              <Typography variant="body2">
-                ¿No tienes una cuenta? <Link href="#" color="#2376a1">Regístrate aquí</Link>
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }} width={"100%"}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="inherit"
+            variant="fullWidth"
+            aria-label="full width tabs example"
+          >
+            <Tab
+              iconPosition="start"
+              icon={<SickIcon />}
+              label={<Typography variant="h5">Soy paciente</Typography>} // Customize the label with Typography
+              {...a11yProps(0)}
+              sx={{
+                fontSize: '1.2rem',
+                fontWeight: 'bold',
+                color: (theme) => (value === 0 ? '#10587e' : 'gray'), // Customize color based on tab selection
+                '& .MuiSvgIcon-root': {
+                  color: (theme) => ('#10587e'), // Customize icon color based on tab selection
+                },
+              }}
+            />
+            <Tab
+              iconPosition="start"
+              icon={<LocalHospitalIcon />}
+              label={<Typography variant="h5">Soy doctor</Typography>} // Customize the label with Typography
+              {...a11yProps(1)}
+              sx={{
+                fontSize: '1.2rem',
+                fontWeight: 'bold',
+                color: (theme) => (value === 1 ? '#10587e' : 'gray'), // Customize color based on tab selection
+                '& .MuiSvgIcon-root': {
+                  color: (theme) => ('#10587e'), // Customize icon color based on tab selection
+                },
+              }}
+            />
+          </Tabs>
 
+        </Box>
+        <SwipeableViews
+          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          index={value}
+          onChangeIndex={handleChangeIndex}
+        >
+          <TabPanel value={value} index={0} dir={theme.direction}>
+            <PacienteLogin />
+          </TabPanel>
+          <TabPanel value={value} index={1} dir={theme.direction}>
+            Item Two
+          </TabPanel>
+        </SwipeableViews>
         <Copyright sx={{ mt: 8 }} />
       </MainBox>
     </Box>
-      </>
   );
 }

@@ -1,9 +1,17 @@
 import React from 'react';
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, Box } from '@mui/material';
 
 export default function Home() {
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10vh'}}>
+        <Box
+            backgroundColor={'#e6f9f6'}
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'flex-start'}
+            width={'100vw'}
+            height={'93vh'}
+            overflow={'hidden'}
+        >
             <Container>
                 <Typography variant="h4" gutterBottom>
                     Body
@@ -18,6 +26,6 @@ export default function Home() {
                     nunc justo et nunc.
                 </Typography>
             </Container>
-        </div>
+        </Box>
     );
 }
