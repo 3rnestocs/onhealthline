@@ -5,7 +5,9 @@ const OButton = ({
     title, 
     color = 'white', 
     bg = '#10587e', 
-    onClick }) => {
+    onClick,
+    fullWidth = false 
+  }) => {
     const handleClick = () => {
         if (onClick) {
             onClick();
@@ -17,7 +19,7 @@ const OButton = ({
     type="submit"
     size="large"
     variant="contained"
-    sx={{ mt: 2, mb: 2, bgcolor: bg, color: color }}
+    sx={{ mt: 2, mb: 2, bgcolor: bg, color: color, width: fullWidth ? '100%' : 'auto' }}
     onClick={handleClick}
   >
     {title}

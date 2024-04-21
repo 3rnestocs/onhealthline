@@ -3,8 +3,7 @@ import * as React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Home from './home';
-import Login from './login/login';
-import Register from "./register/register";
+import Access from './access/access';
 import OAppBar from '@/components/OAppBar';
 
 function App() {
@@ -25,7 +24,7 @@ function Content() {
   };
 
   const handleLoginClick = () => {
-    navigate('/login');
+    navigate('/access');
     setShowLoginButton(false);
   };
 
@@ -43,8 +42,7 @@ function Content() {
       />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/access" element={<Access />} />
       </Routes>
     </>
   );
