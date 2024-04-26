@@ -6,6 +6,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import SearchIcon from '@mui/icons-material/Search';
 
 const OTextField = ({
     backgroundColor = '#f2f2f2',
@@ -56,6 +57,13 @@ const OTextField = ({
           </InputAdornment>
         );
         break;
+      case 'search':
+        startAdornment = (
+          <InputAdornment position="start">
+            <SearchIcon />
+          </InputAdornment>
+          );
+        break 
       default:
         startAdornment = null;
     }

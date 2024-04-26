@@ -1,8 +1,12 @@
 import OButton from '@/components/OButton';
 import OTextField from '@/components/OTextField';
 import { Grid, Link, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function PacienteLogin() {
+
+    const navigate = useNavigate();
+
     const handleSubmit = (event) => {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
@@ -11,6 +15,10 @@ function PacienteLogin() {
         password: data.get('password'),
       });
     };
+
+    const handleNavigate = () =>{
+      navigate('/schedules')
+    }
   
     return (
       <Grid container width={'25vw'} direction={'column'} alignItems='center' marginTop={1} component={'form'} onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -39,6 +47,7 @@ function PacienteLogin() {
         />
         <OButton
           title="Iniciar sesión"
+          onClick={handleNavigate}
         />
         <Grid container direction={'column'} alignItems='center' spacing={1} marginTop={1}>
           <Grid item xs>
