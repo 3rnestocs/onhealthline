@@ -4,7 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Home from './home';
 import Access from './access/access';
-import OAppBar from '@/components/OAppBar';
+import LoggedLayOut from '@/components/Layouts/LoggedLayOut';
+import Specialization from './Schedule/Specialization';
+import MySchedule from './Schedule/MySchedule';
 
 function App() {
   return (
@@ -35,14 +37,16 @@ function Content() {
 
   return (
     <>
-      <OAppBar 
-        onMenuClick={handleMenuClick} 
-        onLoginClick={handleLoginClick} 
-        showLoginButton={showLoginButton} 
-      />
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} /> */}
         <Route path="/access" element={<Access />} />
+        <Route path="/" element={<Home
+        onMenuClick={handleMenuClick}
+        onLoginClick={handleLoginClick}
+        showLoginButton={showLoginButton}        
+        />} />
+        <Route path="/schedules" element={<LoggedLayOut> <Specialization /></LoggedLayOut>} />
+        <Route path="/myschedules" element={<LoggedLayOut> <MySchedule/></LoggedLayOut>} />
       </Routes>
     </>
   );
