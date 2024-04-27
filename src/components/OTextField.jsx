@@ -5,7 +5,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
+import EmailIcon from '@mui/icons-material/Email';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import SearchIcon from '@mui/icons-material/Search';
 
 const OTextField = ({
     backgroundColor = '#f2f2f2',
@@ -13,7 +15,7 @@ const OTextField = ({
     focusedColor = '#2376a1',
     topLabel,
     width,
-    type,
+    type = 'text',
     icon,
     inputType,
     ...otherProps
@@ -35,7 +37,7 @@ const OTextField = ({
           </InputAdornment>
         );
         break;
-      case 'username':
+      case 'personIcon':
         startAdornment = (
           <InputAdornment position="start">
             <PersonIcon />
@@ -49,13 +51,20 @@ const OTextField = ({
           </InputAdornment>
         );
         break;
-      case 'text':
+      case 'custom':
         startAdornment = (
           <InputAdornment position="start">
             {icon}
           </InputAdornment>
         );
         break;
+      case 'search':
+        startAdornment = (
+          <InputAdornment position="start">
+            <SearchIcon />
+          </InputAdornment>
+          );
+        break 
       default:
         startAdornment = null;
     }

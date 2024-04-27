@@ -5,7 +5,8 @@ import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
 import SickIcon from '@mui/icons-material/Sick';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import PacienteLogin from './pacienteLogin';
+import PacienteLogin from './login/pacienteLogin';
+import Register from './register/register';
 
 function Copyright(props) {
   return (
@@ -63,7 +64,7 @@ const MainBox = styled(Box)({
   minHeight: '60%',
 });
 
-export default function SignIn() {
+export default function Access() {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -87,7 +88,7 @@ export default function SignIn() {
       height={`${containerHeight}px`}
       overflow={'hidden'}
     >
-      <MainBox>
+      <MainBox sx={{height:'70vh'}}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }} width={"100%"}>
           <Tabs
             value={value}
@@ -126,21 +127,21 @@ export default function SignIn() {
               }}
             />
           </Tabs>
-
         </Box>
         <SwipeableViews
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={value}
           onChangeIndex={handleChangeIndex}
+          margin={'auto'}
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
             <PacienteLogin />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            Item Two
+            <Register />
           </TabPanel>
         </SwipeableViews>
-        <Copyright sx={{ mt: 8 }} />
+        <Copyright/>
       </MainBox>
     </Box>
   );

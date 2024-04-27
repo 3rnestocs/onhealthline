@@ -3,9 +3,10 @@ import * as React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Home from './home';
-import Login from './login/login';
-import Register from "./register/register";
-import OAppBar from '@/components/OAppBar';
+import Access from './access/access';
+import LoggedLayOut from '@/components/Layouts/LoggedLayOut';
+import Specialization from './Schedule/Specialization';
+import MySchedule from './Schedule/MySchedule';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function Content() {
   };
 
   const handleLoginClick = () => {
-    navigate('/login');
+    navigate('/access');
     setShowLoginButton(false);
   };
 
@@ -36,15 +37,16 @@ function Content() {
 
   return (
     <>
-      <OAppBar 
-        onMenuClick={handleMenuClick} 
-        onLoginClick={handleLoginClick} 
-        showLoginButton={showLoginButton} 
-      />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        {/* <Route path="/" element={<Home />} /> */}
+        <Route path="/access" element={<Access />} />
+        <Route path="/" element={<Home
+        onMenuClick={handleMenuClick}
+        onLoginClick={handleLoginClick}
+        showLoginButton={showLoginButton}        
+        />} />
+        <Route path="/schedules" element={<LoggedLayOut> <Specialization /></LoggedLayOut>} />
+        <Route path="/myschedules" element={<LoggedLayOut> <MySchedule/></LoggedLayOut>} />
       </Routes>
     </>
   );
