@@ -2,55 +2,74 @@ import OButton from '@/components/OButton';
 import OTextField from '@/components/OTextField';
 import { Grid, Typography } from '@mui/material';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useAuth } from '@/api/AuthProvider';
+// import { useDispatch } from 'react-redux';
+// import { login } from '@/redux/user/userSlice';
 
 function Login({ tipoUsuario }) {
-
   const navigate = useNavigate();
+  const { loginAction } = useAuth();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const [error, setError] = useState('');
+  // const dispatch = useDispatch();
 
-  const handleSubmit = (event) => {
+  const handleChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    navigate('/schedules')
+    if (!formData.email || !formData.password) {
+      setError('Los campos son inválidos, por favor llénalos correctamente.');
+      return;
+    }
+    console.log("request 1:", formData);
+    // dispatch(login(formData))
+    try {
+      await loginAction(formData);
+      // navigate('/schedules');
+    } catch (err) {
+      console.error(err);
+      setError('Error al iniciar sesión. Por favor, inténtalo de nuevo.');
+    }
   };
 
   return (
     <Grid container width={'25vw'} direction={'column'} alignItems='center' marginTop={1} component={'form'} onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
       <OTextField
-        placeholder="Ingresa tu nombre de usuario"
-        focusedColor="#2376a1"
-        topLabel="Nombre de usuario"
-        width="100%"
-        inputType="username"
-        name="username"
+        topLabel="Correo electrónico"
+        placeholder="Ingresa tu correo electrónico"
+        inputType="email"
+        name="email"
         required
-        id="username"
-        autoComplete="username"
         autoFocus
+        value={formData.email}
+        onChange={handleChange}
       />
       <OTextField
-        placeholder="Ingresa tu contraseña"
-        focusedColor="#2376a1"
         topLabel="Contraseña"
-        width="100%"
+        placeholder="Ingresa tu contraseña"
         inputType="password"
         name="password"
         required
-        id="password"
-        autoComplete="current-password"
+        value={formData.password}
+        onChange={handleChange}
       />
       <OButton title="Iniciar sesión" />
-      <Grid container direction={'column'} alignItems='center' spacing={1} marginTop={1}>
-        <Grid item xs>
-          <Typography variant="body2">
-            ¿Olvidaste tu contraseña? <Link to='/access' style={{ color: '#2376a1' }}>Recupérala aquí</Link>
-          </Typography>
-        </Grid>
+      {error && (
+        <Typography variant="body2" color="error">
+          {error}
+        </Typography>
+      )}
+      <Grid item xs>
+        <Typography variant="body2">
+          ¿Olvidaste tu contraseña? <Link to='/access' style={{ color: '#2376a1' }}>Recupérala aquí</Link>
+        </Typography>
       </Grid>
     </Grid>
   );

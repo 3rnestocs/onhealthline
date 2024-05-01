@@ -51,11 +51,12 @@ export default function Register() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        navigate('/schedules');
     };
 
     return (
         <Grid container width={'50vw'} direction={'column'} alignItems='center' marginTop={1} component={'form'} onSubmit={handleSubmit}>
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}> */}
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <OTextField
@@ -180,7 +181,7 @@ export default function Register() {
                         <OButton title="Crear mi cuenta" fullWidth={true}/>
                     </Grid>
                 </Grid>
-            </form>
+            {/* </form> */}
         </Grid>
     );
 };
