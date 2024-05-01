@@ -19,14 +19,14 @@ export default function Register({ tipoUsuario }) {
         id: '',
         email: '',
         password: '',
-        name: '',
+        first_name: '',
         last_name: '',
         second_last_name: '',
         phone: '',
         sex: '',
         birthdate: '',
         address: '',
-        user_type: tipoUsuario
+        user_type: tipoUsuario.toUpperCase()
     });
 
     const handleFormChange = (event) => {
@@ -106,8 +106,7 @@ export default function Register({ tipoUsuario }) {
             // Optionally, navigate to another page after successful registration
             // navigate('/success');
         } catch (err) {
-            console.error(err);
-            setError('Error al registrar. Por favor, inténtalo de nuevo.');
+            setError(`El usuario ya se encuentra registrado.`);
         }
     };
 
@@ -120,8 +119,8 @@ export default function Register({ tipoUsuario }) {
                         topLabel="Nombre"
                         placeholder="Nombre"
                         inputType="personIcon"
-                        name="name"
-                        value={formData.name}
+                        name="first_name"
+                        value={formData.first_name}
                         onChange={handleFormChange}
                     />
                 </Grid>

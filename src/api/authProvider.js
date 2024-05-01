@@ -20,11 +20,11 @@ const AuthProvider = ({ children }) => {
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                throw new Error(`HTTP error! Status: ${response.Message}`);
             }
-
+            
             const res = await response.json();
-
+            
             if (res.Token && res.user) {
                 setUser(res.user);
                 setToken(res.Token);
@@ -34,11 +34,11 @@ const AuthProvider = ({ children }) => {
                 throw new Error("Invalid response format");
             }
         } catch (err) {
-            console.error(err);
-            setError('Error al iniciar sesión. Por favor, inténtalo de nuevo.');
+            // console.error(err);
+            throw new Error(err);
         }
     };
-
+    
     const registerAction = async (data) => {
         try {
             const response = await fetch(`${API_URL_BACKEND}/auth/register/`, {
@@ -48,21 +48,21 @@ const AuthProvider = ({ children }) => {
                 },
                 body: JSON.stringify(data),
             });
-
+            
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                throw new Error(`HTTP error! Status: ${response.Message}`);
             }
-
+            
             const res = await response.json();
-
+            
+            console.log("request 2:", res);
             if (res.message) {
                 loginAction({ email: data.email, password: data.password });
             } else {
                 throw new Error("Invalid response format");
             }
         } catch (err) {
-            console.error(err);
-            setError('Error al registrarse. Por favor, inténtalo de nuevo.');
+            throw new Error(err);
         }
     };
 
