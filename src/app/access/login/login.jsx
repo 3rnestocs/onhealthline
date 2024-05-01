@@ -3,7 +3,7 @@ import OTextField from '@/components/OTextField';
 import { Grid, Link, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-function PacienteLogin() {
+function PacienteLogin({ tipoUsuario }) {
 
     const navigate = useNavigate();
 
@@ -14,11 +14,8 @@ function PacienteLogin() {
         email: data.get('email'),
         password: data.get('password'),
       });
-    };
-
-    const handleNavigate = () =>{
       navigate('/schedules')
-    }
+    };
   
     return (
       <Grid container width={'25vw'} direction={'column'} alignItems='center' marginTop={1} component={'form'} onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -45,10 +42,7 @@ function PacienteLogin() {
           id="password"
           autoComplete="current-password"
         />
-        <OButton
-          title="Iniciar sesión"
-          onClick={handleNavigate}
-        />
+        <OButton title="Iniciar sesión"/>
         <Grid container direction={'column'} alignItems='center' spacing={1} marginTop={1}>
           <Grid item xs>
             <Typography variant="body2">

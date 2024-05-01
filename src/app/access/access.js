@@ -1,12 +1,10 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Typography, styled, Tabs, Tab } from '@mui/material';
-import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
 import SickIcon from '@mui/icons-material/Sick';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import PacienteLogin from './login/pacienteLogin';
-import Register from './register/register';
+import Login from './login/login';
 
 function Copyright(props) {
   return (
@@ -60,7 +58,7 @@ const MainBox = styled(Box)({
   padding: '20px',
   backgroundColor: 'white',
   margin: 'auto',
-  minWidth: '30%',
+  minWidth: '35%',
   minHeight: '60%',
 });
 
@@ -104,8 +102,6 @@ export default function Access() {
               label={<Typography variant="h5">Soy paciente</Typography>} // Customize the label with Typography
               {...a11yProps(0)}
               sx={{
-                fontSize: '1.2rem',
-                fontWeight: 'bold',
                 color: (theme) => (value === 0 ? '#10587e' : 'gray'), // Customize color based on tab selection
                 '& .MuiSvgIcon-root': {
                   color: (theme) => ('#10587e'), // Customize icon color based on tab selection
@@ -118,8 +114,6 @@ export default function Access() {
               label={<Typography variant="h5">Soy doctor</Typography>} // Customize the label with Typography
               {...a11yProps(1)}
               sx={{
-                fontSize: '1.2rem',
-                fontWeight: 'bold',
                 color: (theme) => (value === 1 ? '#10587e' : 'gray'), // Customize color based on tab selection
                 '& .MuiSvgIcon-root': {
                   color: (theme) => ('#10587e'), // Customize icon color based on tab selection
@@ -128,19 +122,12 @@ export default function Access() {
             />
           </Tabs>
         </Box>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-          margin={'auto'}
-        >
           <TabPanel value={value} index={0} dir={theme.direction}>
-            <PacienteLogin />
+            <Login tipoUsuario={"paciente"} />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <Register />
+            <Login tipoUsuario={"doctor"} />
           </TabPanel>
-        </SwipeableViews>
         <Copyright/>
       </MainBox>
     </Box>
