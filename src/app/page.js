@@ -1,7 +1,8 @@
 'use client'
 import * as React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import OAppBar from '@/components/OAppBar';
 import Home from './home';
 import Access from './access/access';
 import LoggedLayOut from '@/components/Layouts/LoggedLayOut';
@@ -17,9 +18,6 @@ function App() {
 }
 
 function Content() {
-  const [showLoginButton, setShowLoginButton] = React.useState(true);
-  const navigate = useNavigate();
-
   const handleMenuClick = () => {
     navigate('/');
     setShowLoginButton(true);
@@ -30,23 +28,41 @@ function Content() {
     setShowLoginButton(false);
   };
 
+  const [showLoginButton, setShowLoginButton] = React.useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [showAppBar, setShowAppBar] = React.useState(true);
+  
   React.useEffect(() => {
     document.body.style.margin = '0';
     document.body.style.padding = '0';
   }, []);
 
+  React.useEffect(() => {
+    // Reset showLoginButton to true when navigating back to the home page
+    if (location.pathname === '/') {
+      setShowLoginButton(true);
+    }
+  }, [location.pathname]);
+
+  React.useEffect(() => {
+    setShowAppBar(!['/schedules', '/myschedules'].includes(location.pathname));
+  }, [location.pathname]);
+
   return (
     <>
+      {showAppBar && (
+        <OAppBar
+          onMenuClick={handleMenuClick}
+          onLoginClick={handleLoginClick}
+          showLoginButton={showLoginButton}
+        />
+      )}
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
         <Route path="/access" element={<Access />} />
-        <Route path="/" element={<Home
-        onMenuClick={handleMenuClick}
-        onLoginClick={handleLoginClick}
-        showLoginButton={showLoginButton}        
-        />} />
+        <Route path="/" element={<Home />} />
         <Route path="/schedules" element={<LoggedLayOut> <Specialization /></LoggedLayOut>} />
-        <Route path="/myschedules" element={<LoggedLayOut> <MySchedule/></LoggedLayOut>} />
+        <Route path="/myschedules" element={<LoggedLayOut> <MySchedule /></LoggedLayOut>} />
       </Routes>
     </>
   );

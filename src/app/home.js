@@ -1,15 +1,8 @@
 import React from 'react';
 import { Container, Typography, Box } from '@mui/material';
-import OAppBar from '@/components/OAppBar';
-export default function Home({ onMenuClick, onLoginClick, showLoginButton }) {
+export default function Home() {
     return (
         <>
-        <OAppBar 
-        onMenuClick={onMenuClick} 
-        onLoginClick={onLoginClick} 
-        showLoginButton={showLoginButton}
-        />
-        
         <Box
             backgroundColor={'#e6f9f6'}
             display={'flex'}

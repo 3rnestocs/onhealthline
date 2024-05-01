@@ -1,9 +1,10 @@
 import OButton from '@/components/OButton';
 import OTextField from '@/components/OTextField';
 import { Grid, Link, Typography } from '@mui/material';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function PacienteLogin({ tipoUsuario }) {
+function Login({ tipoUsuario }) {
 
     const navigate = useNavigate();
 
@@ -59,4 +60,4 @@ function PacienteLogin({ tipoUsuario }) {
     );
   }
 
-  export default PacienteLogin;
+  export default Login;

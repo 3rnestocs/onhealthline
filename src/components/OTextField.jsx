@@ -10,106 +10,106 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import SearchIcon from '@mui/icons-material/Search';
 
 const OTextField = ({
-    backgroundColor = '#f2f2f2',
-    placeholder,
-    focusedColor = '#2376a1',
-    topLabel,
-    width,
-    type = 'text',
-    icon,
-    inputType,
-    ...otherProps
-  }) => {
-    const [showPassword, setShowPassword] = React.useState(false);
-  
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-  
-    const handleMouseDownPassword = (event) => {
-      event.preventDefault();
-    };
-  
-    let startAdornment;
-    switch (inputType) {
-      case 'email':
-        startAdornment = (
-          <InputAdornment position="start">
-            <EmailIcon />
-          </InputAdornment>
-        );
-        break;
-      case 'personIcon':
-        startAdornment = (
-          <InputAdornment position="start">
-            <PersonIcon />
-          </InputAdornment>
-        );
-        break;
-      case 'password':
-        startAdornment = (
-          <InputAdornment position="start">
-            <LockIcon />
-          </InputAdornment>
-        );
-        break;
-      case 'custom':
-        startAdornment = (
-          <InputAdornment position="start">
-            {icon}
-          </InputAdornment>
-        );
-        break;
-      case 'search':
-        startAdornment = (
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-          );
-        break 
-      default:
-        startAdornment = null;
-    }
-  
-    let endAdornment;
-    if (inputType === 'password') {
-      endAdornment = (
-        <InputAdornment position="end">
-          <IconButton
-            aria-label="toggle password visibility"
-            onClick={handleClickShowPassword}
-            onMouseDown={handleMouseDownPassword}
-            edge="end"
-          >
-            {showPassword ? <VisibilityOff /> : <Visibility />}
-          </IconButton>
+  backgroundColor = '#f2f2f2',
+  placeholder,
+  focusedColor = '#2376a1',
+  topLabel,
+  width,
+  type = 'text',
+  icon,
+  inputType,
+  ...otherProps
+}) => {
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  let startAdornment;
+  switch (inputType) {
+    case 'email':
+      startAdornment = (
+        <InputAdornment position="start">
+          <EmailIcon />
         </InputAdornment>
       );
-    }
-  
-    return (
-      <TextField
-        fullWidth
-        variant="outlined"
-        margin="normal"
-        type={type}
-        placeholder={placeholder}
-        InputProps={{
-          startAdornment,
-          endAdornment,
-        }}
-        label={topLabel}
-        {...otherProps}
-        sx={{
-          backgroundColor,
-          '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: focusedColor,
-          },
-          '& .MuiInputLabel-outlined.Mui-focused': {
-            color: focusedColor,
-          },
-          width,
-        }}
-      />
+      break;
+    case 'personIcon':
+      startAdornment = (
+        <InputAdornment position="start">
+          <PersonIcon />
+        </InputAdornment>
+      );
+      break;
+    case 'password':
+      startAdornment = (
+        <InputAdornment position="start">
+          <LockIcon />
+        </InputAdornment>
+      );
+      break;
+    case 'custom':
+      startAdornment = (
+        <InputAdornment position="start">
+          {icon}
+        </InputAdornment>
+      );
+      break;
+    case 'search':
+      startAdornment = (
+        <InputAdornment position="start">
+          <SearchIcon />
+        </InputAdornment>
+      );
+      break
+    default:
+      startAdornment = null;
+  }
+
+  let endAdornment;
+  if (inputType === 'password') {
+    endAdornment = (
+      <InputAdornment position="end">
+        <IconButton
+          aria-label="toggle password visibility"
+          onClick={handleClickShowPassword}
+          onMouseDown={handleMouseDownPassword}
+          edge="end"
+        >
+          {showPassword ? <VisibilityOff /> : <Visibility />}
+        </IconButton>
+      </InputAdornment>
     );
-  };
+  }
+
+  return (
+    <TextField
+      fullWidth
+      variant="outlined"
+      margin="normal"
+      type={type}
+      placeholder={placeholder}
+      InputProps={{
+        startAdornment,
+        endAdornment,
+      }}
+      label={topLabel}
+      {...otherProps}
+      sx={{
+        backgroundColor,
+        '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+          borderColor: focusedColor,
+        },
+        '& .MuiInputLabel-outlined.Mui-focused': {
+          color: focusedColor,
+        },
+        width,
+      }}
+    />
+  );
+};
 
 export default OTextField;
