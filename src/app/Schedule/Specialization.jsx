@@ -45,6 +45,7 @@ const Specialization = () => {
     const handleSearch = (value) => {
         setSearchValue(value);
         setIsSearching(value !== '');
+        console.log(localStorage.getItem('token'));
     };
 
     return (

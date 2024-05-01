@@ -6,7 +6,7 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [token, setToken] = useState(localStorage.getItem("site") || "");
+    const [token, setToken] = useState(localStorage.getItem("token") || "");
     const navigate = useNavigate();
 
     const loginAction = async (data) => {
@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
             if (res.Token && res.user) {
                 setUser(res.user);
                 setToken(res.Token);
-                localStorage.setItem("site", res.Token);
+                localStorage.setItem("token", res.Token);
                 navigate("/schedules");
             } else {
                 throw new Error("Invalid response format");
@@ -39,16 +39,42 @@ const AuthProvider = ({ children }) => {
         }
     };
 
+    const registerAction = async (data) => {
+        try {
+            const response = await fetch(`${API_URL_BACKEND}/auth/register/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const res = await response.json();
+
+            if (res.message) {
+                loginAction({ email: data.email, password: data.password });
+            } else {
+                throw new Error("Invalid response format");
+            }
+        } catch (err) {
+            console.error(err);
+            setError('Error al registrarse. Por favor, inténtalo de nuevo.');
+        }
+    };
 
     const logOut = () => {
         setUser(null);
         setToken("");
-        localStorage.removeItem("site");
+        localStorage.removeItem("token");
         navigate("/access");
     };
 
     return (
-        <AuthContext.Provider value={{ token, user, loginAction, logOut }}>
+        <AuthContext.Provider value={{ token, user, loginAction, registerAction, logOut }}>
             {children}
         </AuthContext.Provider>
     );

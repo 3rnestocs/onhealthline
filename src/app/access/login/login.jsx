@@ -24,6 +24,7 @@ function Login({ tipoUsuario }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (!formData.email || !formData.password) {
       setError('Los campos son inválidos, por favor llénalos correctamente.');
       return;
@@ -32,7 +33,6 @@ function Login({ tipoUsuario }) {
     // dispatch(login(formData))
     try {
       await loginAction(formData);
-      // navigate('/schedules');
     } catch (err) {
       console.error(err);
       setError('Error al iniciar sesión. Por favor, inténtalo de nuevo.');

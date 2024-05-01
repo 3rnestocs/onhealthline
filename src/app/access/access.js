@@ -137,7 +137,7 @@ export default function Access() {
         )}
         {value === 1 && isShowingLogin && (
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <Login tipoUsuario={"doctor"} />
+            <Login tipoUsuario={"medico"} />
           </TabPanel>
         )}
         {value === 0 && !isShowingLogin && (
@@ -147,7 +147,7 @@ export default function Access() {
         )}
         {value === 1 && !isShowingLogin && (
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <Register tipoUsuario={"doctor"} />
+            <Register tipoUsuario={"medico"} />
           </TabPanel>
         )}
         <Box display="flex" justifyContent="center">
