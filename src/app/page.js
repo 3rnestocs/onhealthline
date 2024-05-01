@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import OAppBar from '@/components/OAppBar';
 import Home from './home';
 import Access from './access/access';
+import Register from './access/register/register';
 import LoggedLayOut from '@/components/Layouts/LoggedLayOut';
 import Specialization from './Schedule/Specialization';
 import MySchedule from './Schedule/MySchedule';
@@ -63,6 +64,7 @@ function Content() {
         <Route path="/" element={<Home />} />
         <Route path="/schedules" element={<LoggedLayOut> <Specialization /></LoggedLayOut>} />
         <Route path="/myschedules" element={<LoggedLayOut> <MySchedule /></LoggedLayOut>} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </>
   );

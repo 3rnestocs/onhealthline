@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import SickIcon from '@mui/icons-material/Sick';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import Login from './login/login';
+import Register from './register/register';
 
 function Copyright(props) {
   return (
@@ -60,17 +61,24 @@ const MainBox = styled(Box)({
   margin: 'auto',
   minWidth: '35%',
   minHeight: '60%',
+  overflowY: 'auto'
 });
 
 export default function Access() {
   const [value, setValue] = React.useState(0);
+  const [isShowingLogin, setIsShowingLogin] = React.useState(true);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const handleChangeIndex = (index) => {
-    setValue(index);
+  const handleRegisterAction = () => {
+    setIsShowingLogin(false);
+    setValue(0);
   };
+  const handleLoginAction = () => {
+    setIsShowingLogin(true);
+    setValue(0);
+  };
+
   const theme = useTheme();
 
   const appbarHeight = 64;
@@ -86,7 +94,7 @@ export default function Access() {
       height={`${containerHeight}px`}
       overflow={'hidden'}
     >
-      <MainBox sx={{height:'70vh'}}>
+      <MainBox sx={{ height: '70vh' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }} width={"100%"}>
           <Tabs
             value={value}
@@ -122,13 +130,38 @@ export default function Access() {
             />
           </Tabs>
         </Box>
+        {value === 0 && isShowingLogin && (
           <TabPanel value={value} index={0} dir={theme.direction}>
             <Login tipoUsuario={"paciente"} />
           </TabPanel>
+        )}
+        {value === 1 && isShowingLogin && (
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Login tipoUsuario={"doctor"} />
           </TabPanel>
-        <Copyright/>
+        )}
+        {value === 0 && !isShowingLogin && (
+          <TabPanel value={value} index={0} dir={theme.direction}>
+            <Register tipoUsuario={"paciente"} />
+          </TabPanel>
+        )}
+        {value === 1 && !isShowingLogin && (
+          <TabPanel value={value} index={1} dir={theme.direction}>
+            <Register tipoUsuario={"doctor"} />
+          </TabPanel>
+        )}
+        <Box display="flex" justifyContent="center">
+          {isShowingLogin ? (
+            <Typography variant="body2">
+              ¿No tienes una cuenta? <button onClick={() => handleRegisterAction() } style={{ color: '#2376a1', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Regístrate aquí</button>
+            </Typography>
+          ) : (
+            <Typography variant="body2">
+              ¿Ya tienes una cuenta? <button onClick={() => handleLoginAction() } style={{ color: '#2376a1', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Inicia sesión aquí</button>
+            </Typography>
+          )}
+        </Box>
+        <Copyright />
       </MainBox>
     </Box>
   );
