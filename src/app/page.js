@@ -9,6 +9,7 @@ import Register from './access/register/register';
 import LoggedLayOut from '@/components/Layouts/LoggedLayOut';
 import Specialization from './Schedule/Specialization';
 import MySchedule from './Schedule/MySchedule';
+import MyProfile from './Schedule/MyProfile';
 
 function App() {
   return (
@@ -47,7 +48,7 @@ function Content() {
   }, [location.pathname]);
 
   React.useEffect(() => {
-    setShowAppBar(!['/schedules', '/myschedules'].includes(location.pathname));
+    setShowAppBar(!['/schedules', '/myschedules','/myProfile'].includes(location.pathname));
   }, [location.pathname]);
 
   return (
@@ -63,8 +64,9 @@ function Content() {
         <Route path="/access" element={<Access />} />
         <Route path="/" element={<Home />} />
         <Route path="/schedules" element={<LoggedLayOut> <Specialization /></LoggedLayOut>} />
-        <Route path="/myschedules" element={<LoggedLayOut> <MySchedule /></LoggedLayOut>} />
+        <Route path="/myschedules" element={<LoggedLayOut> <MySchedule/></LoggedLayOut>} />
         <Route path="/register" element={<Register />} />
+        <Route path="/myProfile" element={<LoggedLayOut> <MyProfile/></LoggedLayOut>} />
       </Routes>
     </>
   );

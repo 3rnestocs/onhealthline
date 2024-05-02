@@ -24,10 +24,6 @@ const OTextField = ({
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
   let startAdornment;
   switch (inputType) {
     case 'email':
@@ -64,7 +60,7 @@ const OTextField = ({
           <SearchIcon />
         </InputAdornment>
       );
-      break
+      break;
     default:
       startAdornment = null;
   }
@@ -76,7 +72,6 @@ const OTextField = ({
         <IconButton
           aria-label="toggle password visibility"
           onClick={handleClickShowPassword}
-          onMouseDown={handleMouseDownPassword}
           edge="end"
         >
           {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -85,12 +80,14 @@ const OTextField = ({
     );
   }
 
+  const finalType = inputType === 'password' && !showPassword ? 'password' : type;
+
   return (
     <TextField
       fullWidth
       variant="outlined"
       margin="normal"
-      type={type}
+      type={finalType}
       placeholder={placeholder}
       InputProps={{
         startAdornment,
