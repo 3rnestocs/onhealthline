@@ -10,18 +10,8 @@ import { useAuth } from '@/api/authProvider';
 import { fetchEspecialidades } from '@/api/modules/apiHelpers';
 
 export default function Register({ tipoUsuario }) {
-    const { registerAction } = useAuth();
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [checked, setChecked] = useState(false);
-    const [gender, setGender] = useState('');
-    const [month, setMonth] = useState('');
-    const [day, setDay] = useState('');
-    const [year, setYear] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
     const [especialidades, setEspecialidades] = useState([]);
     const [selectedEspecialidad, setSelectedEspecialidad] = useState('');
-    const [error, setError] = useState('');
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -35,6 +25,64 @@ export default function Register({ tipoUsuario }) {
         fetchData();
     }, []);
 
+    const [checked, setChecked] = useState(false);
+    const handleCheckboxChange = (event) => {
+        setChecked(event.target.checked);
+        console.log('especialidad seleccionada:', selectedEspecialidad);
+    };
+
+    const [gender, setGender] = useState('');
+    const handleGenderChange = (event) => {
+        setGender(event.target.value);
+        setFormData({ ...formData, [event.target.name]: event.target.value });
+    };
+
+    const [month, setMonth] = useState('');
+    const handleMonthChange = (event) => {
+        setMonth(event.target.value);
+        updateBirthdate(day, event.target.value, year);
+    };
+
+    const [day, setDay] = useState('');
+    const handleDayChange = (event) => {
+        const value = parseInt(event.target.value, 10);
+        if (!isNaN(value) && value >= 1 && value <= 31) {
+            setDay(value.toString());
+            updateBirthdate(value.toString(), month, year);
+        }
+    };
+
+    const [year, setYear] = useState('');
+    const handleYearChange = (event) => {
+        const value = parseInt(event.target.value, 10);
+        const currentYear = new Date().getFullYear();
+        if (!isNaN(value) && value <= currentYear) {
+            setYear(value.toString());
+            updateBirthdate(day, month, value.toString());
+        }
+    };
+
+    const updateBirthdate = (day, month, year) => {
+        const formattedDate = `${year}-${month}-${day}`;
+        setFormData({ ...formData, birthdate: formattedDate });
+    };
+
+    const [selectedFile, setSelectedFile] = useState(null);
+    const handleFileInputChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+    };
+
+    const handleUploadButtonClick = () => {
+        document.getElementById('upload-file-input').click();
+    };
+
+    const handleEspecialidadChange = (event) => {
+        setSelectedEspecialidad(event.target.value);
+    };
+
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
     const [formData, setFormData] = useState({
         id: '',
         email: '',
@@ -58,56 +106,7 @@ export default function Register({ tipoUsuario }) {
         }
     };
 
-    const handleCheckboxChange = (event) => {
-        setChecked(event.target.checked);
-        console.log('especialidad seleccionada:', selectedEspecialidad);
-    };
-
-    const handleGenderChange = (event) => {
-        setGender(event.target.value);
-        setFormData({ ...formData, [event.target.name]: event.target.value });
-    };
-
-    const handleMonthChange = (event) => {
-        setMonth(event.target.value);
-        updateBirthdate(day, event.target.value, year);
-    };
-
-    const handleDayChange = (event) => {
-        const value = parseInt(event.target.value, 10);
-        if (!isNaN(value) && value >= 1 && value <= 31) {
-            setDay(value.toString());
-            updateBirthdate(value.toString(), month, year);
-        }
-    };
-
-    const handleYearChange = (event) => {
-        const value = parseInt(event.target.value, 10);
-        const currentYear = new Date().getFullYear();
-        if (!isNaN(value) && value <= currentYear) {
-            setYear(value.toString());
-            updateBirthdate(day, month, value.toString());
-        }
-    };
-
-    const updateBirthdate = (day, month, year) => {
-        const formattedDate = `${year}-${month}-${day}`;
-        setFormData({ ...formData, birthdate: formattedDate });
-    };
-
-    const handleFileInputChange = (event) => {
-        const file = event.target.files[0];
-        setSelectedFile(file);
-    };
-
-    const handleUploadButtonClick = () => {
-        document.getElementById('upload-file-input').click();
-    };
-
-    const handleEspecialidadChange = (event) => {
-        setSelectedEspecialidad(event.target.value);
-    };
-
+    const { registerAction } = useAuth();
     const handleSubmit = async (event) => {
         event.preventDefault();
 
