@@ -82,7 +82,7 @@ export default function Register({ tipoUsuario }) {
     };
 
     const handleUploadButtonClick = () => {
-        document.getElementById('file-input').click();
+        document.getElementById('upload-file-input').click();
     };
 
     const handleSubmit = async (event) => {
@@ -201,6 +201,7 @@ export default function Register({ tipoUsuario }) {
                                 style={{ display: 'none' }}
                                 onChange={handleFileInputChange}
                                 id="upload-file-input"
+                                accept='.pdf'
                             />
                         </Grid>
                         <Grid item xs>
