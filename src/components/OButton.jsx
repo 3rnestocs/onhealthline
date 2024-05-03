@@ -6,7 +6,8 @@ const OButton = ({
   color = 'white',
   bg = '#10587e',
   onClick,
-  fullWidth = false
+  fullWidth = false,
+  icon = null
 }) => {
   const handleClick = () => {
     if (onClick) {
@@ -21,6 +22,7 @@ const OButton = ({
       variant="contained"
       sx={{ mt: 2, mb: 2, bgcolor: bg, color: color, width: fullWidth ? '100%' : 'auto' }}
       onClick={handleClick}
+      startIcon={icon}
     >
       {title}
     </Button>
