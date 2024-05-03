@@ -3,11 +3,13 @@ import OButton from '@/components/OButton';
 import OTextField from '@/components/OTextField';
 import { InputAdornment, Checkbox, FormControlLabel, Radio, RadioGroup, Grid, Typography, MenuItem } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import PhoneIcon from '@mui/icons-material/Phone';
 import { useState } from 'react';
 import { useAuth } from '@/api/authProvider';
 
 export default function Register({ tipoUsuario }) {
     const { registerAction } = useAuth();
+    const [selectedFile, setSelectedFile] = useState(null);
     const [checked, setChecked] = useState(false);
     const [gender, setGender] = useState('');
     const [month, setMonth] = useState('');
@@ -31,24 +33,20 @@ export default function Register({ tipoUsuario }) {
 
     const handleFormChange = (event) => {
         const { name, value } = event.target;
-        console.log("name:", name);
-        if (name == 'confirmpassword') {
+        if (name === 'confirmpassword') {
             setConfirmPassword(value);
         } else {
             setFormData({ ...formData, [name]: value });
         }
-        console.log("data:", formData);
     };
 
     const handleCheckboxChange = (event) => {
         setChecked(event.target.checked);
-        console.log("data:", formData);
     };
 
     const handleGenderChange = (event) => {
         setGender(event.target.value);
         setFormData({ ...formData, [event.target.name]: event.target.value });
-        console.log("data:", formData);
     };
 
     const handleMonthChange = (event) => {
@@ -78,9 +76,18 @@ export default function Register({ tipoUsuario }) {
         setFormData({ ...formData, birthdate: formattedDate });
     };
 
+    const handleFileInputChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+    };
+
+    const handleUploadButtonClick = () => {
+        document.getElementById('file-input').click();
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+
         for (const key in formData) {
             if (!formData[key]) {
                 setError('Por favor, completa todos los campos.');
@@ -100,20 +107,14 @@ export default function Register({ tipoUsuario }) {
 
         // Log form data
         console.log("request 1:", formData);
-        try {
-            await registerAction(formData);
-            console.log("request response success:", formData);
-            // Optionally, navigate to another page after successful registration
-            // navigate('/success');
-        } catch (err) {
-            setError(`El usuario ya se encuentra registrado.`);
-        }
+        // Perform registration action
+        registerAction(formData);
     };
-
 
     return (
         <Grid container width={'50vw'} direction={'column'} alignItems='center' marginTop={1} component={'form'} onSubmit={handleSubmit}>
             <Grid container spacing={2}>
+                {/* Common fields */}
                 <Grid item xs={12} sm={6}>
                     <OTextField
                         topLabel="Nombre"
@@ -173,10 +174,10 @@ export default function Register({ tipoUsuario }) {
                         name="phone"
                         value={formData.phone}
                         onChange={handleFormChange}
-                        icon={<InputAdornment position="start">🚩</InputAdornment>}
+                        icon={<PhoneIcon position="start" />}
                     />
                 </Grid>
-                <Grid item xs={12} sm={12}>
+                <Grid item xs={12} sm={tipoUsuario == "medico" ? 6 : 12}>
                     <OTextField
                         topLabel="Direccion"
                         placeholder="Direccion"
@@ -187,6 +188,32 @@ export default function Register({ tipoUsuario }) {
                         onChange={handleFormChange}
                     />
                 </Grid>
+                {tipoUsuario === 'medico' && (
+                    <Grid item xs={12} sm={6} container spacing={2}>
+                        <Grid item>
+                            <OButton
+                                title="Subir curriculum"
+                                onClick={handleUploadButtonClick}
+                                disabled={!selectedFile}
+                            />
+                            <input
+                                type="file"
+                                style={{ display: 'none' }}
+                                onChange={handleFileInputChange}
+                                id="upload-file-input"
+                            />
+                        </Grid>
+                        <Grid item xs>
+                                <OTextField
+                                    topLabel=""
+                                    placeholder="Nombre del archivo"
+                                    inputType="custom"
+                                    value={selectedFile ? selectedFile.name : ''}
+                                    disabled
+                                />
+                        </Grid>
+                    </Grid>
+                )}
                 <Grid item xs={12} sm={6}>
                     <OTextField
                         topLabel="Contraseña"
@@ -195,7 +222,7 @@ export default function Register({ tipoUsuario }) {
                         name="password"
                         value={formData.password}
                         onChange={handleFormChange}
-                        />
+                    />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <OTextField
@@ -206,53 +233,74 @@ export default function Register({ tipoUsuario }) {
                         onChange={handleFormChange}
                     />
                 </Grid>
-                <Grid item xs={12} sm={4}>
-                    <OTextField
-                        topLabel="Año"
-                        type="number"
-                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                        value={year}
-                        onChange={handleYearChange}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                    <OTextField
-                        fullWidth
-                        topLabel="Mes"
-                        select
-                        value={month}
-                        onChange={handleMonthChange}
-                    >
-                        <MenuItem value={1}>Enero</MenuItem>
-                        <MenuItem value={2}>Febrero</MenuItem>
-                        <MenuItem value={3}>Marzo</MenuItem>
-                        <MenuItem value={4}>Abril</MenuItem>
-                        <MenuItem value={5}>Mayo</MenuItem>
-                        <MenuItem value={6}>Junio</MenuItem>
-                        <MenuItem value={7}>Julio</MenuItem>
-                        <MenuItem value={8}>Agosto</MenuItem>
-                        <MenuItem value={9}>Septiembre</MenuItem>
-                        <MenuItem value={10}>Octubre</MenuItem>
-                        <MenuItem value={11}>Noviembre</MenuItem>
-                        <MenuItem value={12}>Diciembre</MenuItem>
-                    </OTextField>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                    <OTextField
-                        topLabel="Dia"
-                        type="number"
-                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                        value={day}
-                        onChange={handleDayChange}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography variant="subtitle1" sx={{ color: '#10587e', marginBottom: '8px' }}>Género</Typography>
-                    <RadioGroup value={gender} name='sex' onChange={handleGenderChange} row>
-                        <FormControlLabel value="0" control={<Radio sx={{ color: '#10587e' }} />} label="Masculino" sx={{ '& .Mui-checked': { color: '#10587e' } }} />
-                        <FormControlLabel value="1" control={<Radio sx={{ color: '#10587e' }} />} label="Femenino" sx={{ '& .Mui-checked': { color: '#10587e' } }} />
-                    </RadioGroup>
-                </Grid>
+                {tipoUsuario === 'medico' && (
+                    <>
+                        <Grid item xs={12}>
+                            <OTextField
+                                multiline
+                                rows={4}
+                                fullWidth
+                                topLabel="Descripcion medica"
+                                placeholder="Escribe una breve descripcion sobre tus labores medicas aquí"
+                                inputType="custom"
+                                name="message"
+                                value={formData.message}
+                                onChange={handleFormChange}
+                            />
+                        </Grid>
+                    </>
+                )}
+                {tipoUsuario === 'paciente' && (
+                    <>
+                        <Grid item xs={12} sm={4}>
+                            <OTextField
+                                topLabel="Año"
+                                type="number"
+                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                                value={year}
+                                onChange={handleYearChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <OTextField
+                                fullWidth
+                                topLabel="Mes"
+                                select
+                                value={month}
+                                onChange={handleMonthChange}
+                            >
+                                <MenuItem value={1}>Enero</MenuItem>
+                                <MenuItem value={2}>Febrero</MenuItem>
+                                <MenuItem value={3}>Marzo</MenuItem>
+                                <MenuItem value={4}>Abril</MenuItem>
+                                <MenuItem value={5}>Mayo</MenuItem>
+                                <MenuItem value={6}>Junio</MenuItem>
+                                <MenuItem value={7}>Julio</MenuItem>
+                                <MenuItem value={8}>Agosto</MenuItem>
+                                <MenuItem value={9}>Septiembre</MenuItem>
+                                <MenuItem value={10}>Octubre</MenuItem>
+                                <MenuItem value={11}>Noviembre</MenuItem>
+                                <MenuItem value={12}>Diciembre</MenuItem>
+                            </OTextField>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <OTextField
+                                topLabel="Dia"
+                                type="number"
+                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                                value={day}
+                                onChange={handleDayChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography variant="subtitle1" sx={{ color: '#10587e', marginBottom: '8px' }}>Género</Typography>
+                            <RadioGroup value={gender} name='sex' onChange={handleGenderChange} row>
+                                <FormControlLabel value="0" control={<Radio sx={{ color: '#10587e' }} />} label="Masculino" sx={{ '& .Mui-checked': { color: '#10587e' } }} />
+                                <FormControlLabel value="1" control={<Radio sx={{ color: '#10587e' }} />} label="Femenino" sx={{ '& .Mui-checked': { color: '#10587e' } }} />
+                            </RadioGroup>
+                        </Grid>
+                    </>
+                )}
                 <Grid item xs={12}>
                     <FormControlLabel
                         control={<Checkbox checked={checked} onChange={handleCheckboxChange} />}
@@ -260,7 +308,7 @@ export default function Register({ tipoUsuario }) {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <OButton title="Crear cuenta" fullWidth={true} />
+                    <OButton title="Crear cuenta" fullWidth={true} height='100%' />
                     {error && (
                         <Typography variant="body2" color="error">
                             {error}

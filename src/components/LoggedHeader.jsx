@@ -65,10 +65,10 @@ const LoggedHeader = () => {
           </StyledIconButton>
 
           <StyledIconButton>
-            <Link to='/'> <AccountCircleIcon sx={{ color: '#2373a0' }} /> </Link>
+            <Link to='/myProfile'> <AccountCircleIcon sx={{ color: '#2373a0' }} /> </Link>
           </StyledIconButton>
-
-          <StyledTypography variant='h6'>Walter White</StyledTypography>
+          <Link to='/myProfile' style={{ textDecoration: 'none' }}> <StyledTypography variant='h6' >Walter White</StyledTypography> </Link>
+          
         </Box>
       </StyledBox>
     </StyledAppBar>
