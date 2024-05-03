@@ -17,6 +17,7 @@ export default function Register({ tipoUsuario }) {
     const [year, setYear] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
+    const [selectedFile, setSelectedFile] = useState(null);
     const [formData, setFormData] = useState({
         id: '',
         email: '',
@@ -77,18 +78,11 @@ export default function Register({ tipoUsuario }) {
         setFormData({ ...formData, birthdate: formattedDate });
     };
 
-<<<<<<< HEAD
     const handleFileInputChange = (event) => {
         const file = event.target.files[0];
         setSelectedFile(file);
     };
 
-    const handleUploadButtonClick = () => {
-        document.getElementById('upload-file-input').click();
-    };
-
-=======
->>>>>>> f06fadc (Cambios iniciales para manejar registro de medico.)
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -107,7 +101,7 @@ export default function Register({ tipoUsuario }) {
         } else {
             // validaciones para medico
         }
-        
+
         if (formData.password !== confirmPassword) {
             setError('Las contraseñas no coinciden.');
             return;
@@ -201,27 +195,22 @@ export default function Register({ tipoUsuario }) {
                             <OButton
                                 title="CV"
                                 icon={<UploadIcon />}
-<<<<<<< HEAD
                             />
                             <input
                                 type="file"
                                 style={{ display: 'none' }}
                                 onChange={handleFileInputChange}
-                                id="upload-file-input"
                                 accept='.pdf'
-=======
-                                isInput={true}
->>>>>>> f06fadc (Cambios iniciales para manejar registro de medico.)
                             />
                         </Grid>
                         <Grid item xs>
-                                <OTextField
-                                    topLabel=""
-                                    placeholder="Nombre del archivo"
-                                    inputType="custom"
-                                    value={selectedFile ? selectedFile.name : ''}
-                                    disabled
-                                />
+                            <OTextField
+                                topLabel=""
+                                placeholder="Nombre del archivo"
+                                inputType="custom"
+                                value={selectedFile ? selectedFile.name : ''}
+                                disabled
+                            />
                         </Grid>
                     </Grid>
                 )}
