@@ -10,7 +10,6 @@ import { useAuth } from '@/api/authProvider';
 
 export default function Register({ tipoUsuario }) {
     const { registerAction } = useAuth();
-    const [selectedFile, setSelectedFile] = useState(null);
     const [checked, setChecked] = useState(false);
     const [gender, setGender] = useState('');
     const [month, setMonth] = useState('');
@@ -27,11 +26,12 @@ export default function Register({ tipoUsuario }) {
         second_last_name: '',
         phone: '',
         sex: '',
-        birthdate: '',
+        birthdate: tipoUsuario === 'paciente' ? '' : null,
         address: '',
+        descripcion: tipoUsuario === 'medico' ? '' : null,
+        id_especialidad: tipoUsuario === 'medico' ? '' : null,
         user_type: tipoUsuario.toUpperCase()
     });
-
     const handleFormChange = (event) => {
         const { name, value } = event.target;
         if (name === 'confirmpassword') {
@@ -77,6 +77,7 @@ export default function Register({ tipoUsuario }) {
         setFormData({ ...formData, birthdate: formattedDate });
     };
 
+<<<<<<< HEAD
     const handleFileInputChange = (event) => {
         const file = event.target.files[0];
         setSelectedFile(file);
@@ -86,6 +87,8 @@ export default function Register({ tipoUsuario }) {
         document.getElementById('upload-file-input').click();
     };
 
+=======
+>>>>>>> f06fadc (Cambios iniciales para manejar registro de medico.)
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -96,16 +99,19 @@ export default function Register({ tipoUsuario }) {
             }
         }
 
-        if (!formData.birthdate || !formData.birthdate.includes('-')) {
-            setError('Por favor, selecciona una fecha de nacimiento válida.');
-            return;
+        if (tipoUsuario === 'paciente') {
+            if (!formData.birthdate || !formData.birthdate.includes('-')) {
+                setError('Por favor, selecciona una fecha de nacimiento válida.');
+                return;
+            }
+        } else {
+            // validaciones para medico
         }
-
+        
         if (formData.password !== confirmPassword) {
             setError('Las contraseñas no coinciden.');
             return;
         }
-
         // Log form data
         console.log("request 1:", formData);
         // Perform registration action
@@ -194,9 +200,8 @@ export default function Register({ tipoUsuario }) {
                         <Grid item>
                             <OButton
                                 title="CV"
-                                onClick={handleUploadButtonClick}
-                                disabled={!selectedFile}
                                 icon={<UploadIcon />}
+<<<<<<< HEAD
                             />
                             <input
                                 type="file"
@@ -204,6 +209,9 @@ export default function Register({ tipoUsuario }) {
                                 onChange={handleFileInputChange}
                                 id="upload-file-input"
                                 accept='.pdf'
+=======
+                                isInput={true}
+>>>>>>> f06fadc (Cambios iniciales para manejar registro de medico.)
                             />
                         </Grid>
                         <Grid item xs>
