@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getJWT } from '@/utils/localStorage';
+import { getJWT } from '@/utils/localStorageHelper';
 
 export const API_URL_BACKEND = 'http://52.23.237.218/api';
 const AXIOS_TIMEOUT_MS = 10000;

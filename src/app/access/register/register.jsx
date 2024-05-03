@@ -1,12 +1,12 @@
 import * as React from 'react';
 import OButton from '@/components/OButton';
 import OTextField from '@/components/OTextField';
-import { InputAdornment, Checkbox, FormControlLabel, Radio, RadioGroup, Grid, Typography, MenuItem } from '@mui/material';
+import { InputAdornment, Checkbox, FormControl, Select, FormControlLabel, Radio, RadioGroup, Grid, Typography, MenuItem, InputLabel } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
 import UploadIcon from '@mui/icons-material/Upload';
-import { useState } from 'react';
-import { useAuth } from '@/api/authProvider';
+import { useState, useEffect } from 'react';
+import { useAuth, API_URL_BACKEND } from '@/api/authProvider';
 
 export default function Register({ tipoUsuario }) {
     const { registerAction } = useAuth();
@@ -17,7 +17,27 @@ export default function Register({ tipoUsuario }) {
     const [day, setDay] = useState('');
     const [year, setYear] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [especialidades, setEspecialidades] = useState([]);
+    const [selectedEspecialidad, setSelectedEspecialidad] = useState('');
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        const fetchEspecialidades = async () => {
+            try {
+                const response = await fetch(`${API_URL_BACKEND}${'/medico/Listar_Especialidades/'}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch especialidades');
+                }
+                const data = await response.json();
+                setEspecialidades(data);
+            } catch (error) {
+                console.error('Error fetching especialidades:', error);
+            }
+        };
+
+        fetchEspecialidades();
+    }, []);
+
     const [formData, setFormData] = useState({
         id: '',
         email: '',
@@ -43,6 +63,7 @@ export default function Register({ tipoUsuario }) {
 
     const handleCheckboxChange = (event) => {
         setChecked(event.target.checked);
+        console.log('especialidad seleccionada:', selectedEspecialidad);
     };
 
     const handleGenderChange = (event) => {
@@ -84,6 +105,10 @@ export default function Register({ tipoUsuario }) {
 
     const handleUploadButtonClick = () => {
         document.getElementById('upload-file-input').click();
+    };
+
+    const handleEspecialidadChange = (event) => {
+        setSelectedEspecialidad(event.target.value);
     };
 
     const handleSubmit = async (event) => {
@@ -207,13 +232,13 @@ export default function Register({ tipoUsuario }) {
                             />
                         </Grid>
                         <Grid item xs>
-                                <OTextField
-                                    topLabel=""
-                                    placeholder="Nombre del archivo"
-                                    inputType="custom"
-                                    value={selectedFile ? selectedFile.name : ''}
-                                    disabled
-                                />
+                            <OTextField
+                                topLabel=""
+                                placeholder="Nombre del archivo"
+                                inputType="custom"
+                                value={selectedFile ? selectedFile.name : ''}
+                                disabled
+                            />
                         </Grid>
                     </Grid>
                 )}
@@ -250,6 +275,21 @@ export default function Register({ tipoUsuario }) {
                                 value={formData.message}
                                 onChange={handleFormChange}
                             />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <OTextField
+                                fullWidth
+                                topLabel="Selecciona una de las especialidades medicas disponibles"
+                                select
+                                value={selectedEspecialidad}
+                                onChange={handleEspecialidadChange}
+                            >
+                                {especialidades.map((especialidad) => (
+                                    <MenuItem key={especialidad.id} value={especialidad.id}>
+                                        {especialidad.name}
+                                    </MenuItem>
+                                ))}
+                            </OTextField>
                         </Grid>
                     </>
                 )}
@@ -295,15 +335,15 @@ export default function Register({ tipoUsuario }) {
                                 onChange={handleDayChange}
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="subtitle1" sx={{ color: '#10587e', marginBottom: '8px' }}>Género</Typography>
-                            <RadioGroup value={gender} name='sex' onChange={handleGenderChange} row>
-                                <FormControlLabel value="0" control={<Radio sx={{ color: '#10587e' }} />} label="Masculino" sx={{ '& .Mui-checked': { color: '#10587e' } }} />
-                                <FormControlLabel value="1" control={<Radio sx={{ color: '#10587e' }} />} label="Femenino" sx={{ '& .Mui-checked': { color: '#10587e' } }} />
-                            </RadioGroup>
-                        </Grid>
                     </>
                 )}
+                <Grid item xs={12}>
+                    <Typography variant="subtitle1" sx={{ color: '#10587e', marginBottom: '8px' }}>Género</Typography>
+                    <RadioGroup value={gender} name='sex' onChange={handleGenderChange} row>
+                        <FormControlLabel value="0" control={<Radio sx={{ color: '#10587e' }} />} label="Masculino" sx={{ '& .Mui-checked': { color: '#10587e' } }} />
+                        <FormControlLabel value="1" control={<Radio sx={{ color: '#10587e' }} />} label="Femenino" sx={{ '& .Mui-checked': { color: '#10587e' } }} />
+                    </RadioGroup>
+                </Grid>
                 <Grid item xs={12}>
                     <FormControlLabel
                         control={<Checkbox checked={checked} onChange={handleCheckboxChange} />}

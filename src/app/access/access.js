@@ -9,7 +9,7 @@ import Register from './register/register';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography variant="body2" color="text.secondary" align="center" sx={{marginTop: '16px'}} {...props}>
       {'Copyright © OnHealthLine '}
       {new Date().getFullYear()}
       {'.'}

@@ -5,6 +5,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { styled } from '@mui/system';
 import { Link } from 'react-router-dom'
+import { getUserName } from '@/utils/localStorageHelper';
 
 const StyledAppBar = styled(AppBar)({
   display: 'flex',
@@ -67,7 +68,7 @@ const LoggedHeader = () => {
           <StyledIconButton>
             <Link to='/myProfile'> <AccountCircleIcon sx={{ color: '#2373a0' }} /> </Link>
           </StyledIconButton>
-          <Link to='/myProfile' style={{ textDecoration: 'none' }}> <StyledTypography variant='h6' >Walter White</StyledTypography> </Link>
+          <Link to='/myProfile' style={{ textDecoration: 'none' }}> <StyledTypography variant='h6' >{getUserName()}</StyledTypography> </Link>
           
         </Box>
       </StyledBox>

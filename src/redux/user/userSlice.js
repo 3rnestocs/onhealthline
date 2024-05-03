@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { loginAPI } from '../../api/modules/user';
-import { setJWT, removeJWT } from "../../utils/localStorage"
+import { setJWT, removeJWT } from "../../utils/localStorageHelper"
 
 const initialState = {
   value: {

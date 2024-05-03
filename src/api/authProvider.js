@@ -28,7 +28,9 @@ const AuthProvider = ({ children }) => {
             if (res.Token && res.user) {
                 setUser(res.user);
                 setToken(res.Token);
+                localStorage.setItem("user", JSON.stringify(res.user))
                 localStorage.setItem("token", res.Token);
+                console.log("user:", res.user);
                 navigate("/schedules");
             } else {
                 throw new Error("Invalid response format");
