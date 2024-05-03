@@ -4,7 +4,7 @@ import OTextField from '@/components/OTextField';
 import { InputAdornment, Checkbox, FormControlLabel, Radio, RadioGroup, Grid, Typography, MenuItem } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import { useState } from 'react';
-import { useAuth } from '@/api/AuthProvider';
+import { useAuth } from '@/api/authProvider';
 
 export default function Register({ tipoUsuario }) {
     const { registerAction } = useAuth();

@@ -4,7 +4,7 @@ import { Grid, Typography } from '@mui/material';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useAuth } from '@/api/AuthProvider';
+import { useAuth } from '@/api/authProvider';
 // import { useDispatch } from 'react-redux';
 // import { login } from '@/redux/user/userSlice';
 

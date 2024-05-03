@@ -29,14 +29,14 @@ const LoggedMenu = () => {
         <Box sx={{ display: 'flex', padding: '30px 10px' }}>
             <List>
                 <ListItem>
-                    <Link to='/'>
+                    <Link to='/schedules'>
                         <Image
                             src={"/assets/ICONMenuDate.PNG"}
                             width={50} height={50}
                         />
                     </Link>
 
-                    <Link to='/' style={{ textDecoration: 'none' }}>
+                    <Link to='/schedules' style={{ textDecoration: 'none' }}>
                         <StyledTypography> Agendar Cita</StyledTypography>
                     </Link>
                 </ListItem>
@@ -57,18 +57,8 @@ const LoggedMenu = () => {
                     </Link>
                 </ListItem>
 
-                <ListItem>
-                    <Link to='/'>
-                        <Image
-                            src={"/assets/ICONMenuDOC.PNG"}
-                            width={50} height={50}
-                        />
-                    </Link>
 
-                    <Link to='/' style={{ textDecoration: 'none' }}>
-                        <StyledTypography>Documentación</StyledTypography>
-                    </Link>
-                </ListItem>
+
 
                 <ListItem>
                     <Link to='/'>
@@ -78,7 +68,7 @@ const LoggedMenu = () => {
                         />
                     </Link>
 
-                    <Link to='/ ' style={{ textDecoration: 'none' }}>
+                    <Link to='/myProfile' style={{ textDecoration: 'none' }}>
                         <StyledTypography> Mi Perfil</StyledTypography>
                     </Link>
                 </ListItem>

@@ -9,11 +9,11 @@ import Register from './access/register/register';
 import LoggedLayOut from '@/components/Layouts/LoggedLayOut';
 import Specialization from './Schedule/Specialization';
 import MySchedule from './Schedule/MySchedule';
-import AuthProvider from '@/api/AuthProvider';
+import AuthProvider from '@/api/authProvider';
 // import PrivateRoute from '@/components/PrivateRoute';
 // import { Provider } from 'react-redux';
 // import { store } from '@/redux/store';
-
+import MyProfile from './Schedule/MyProfile';
 
 function App() {
   return (
@@ -56,7 +56,7 @@ function Content() {
   }, [location.pathname]);
 
   React.useEffect(() => {
-    setShowAppBar(!['/schedules', '/myschedules'].includes(location.pathname));
+    setShowAppBar(!['/schedules', '/myschedules','/myProfile'].includes(location.pathname));
   }, [location.pathname]);
 
   return (
@@ -71,13 +71,10 @@ function Content() {
       <Routes>
         <Route path="/access" element={<Access />} />
         <Route path="/" element={<Home />} />
-        {/* <Route element={<PrivateRoute />}> */}
-          <Route path="/schedules" element={<LoggedLayOut> <Specialization /></LoggedLayOut>} />
-        {/* </Route> */}
-        {/* <Route element={<PrivateRoute />}> */}
-          <Route path="/myschedules" element={<LoggedLayOut> <MySchedule /></LoggedLayOut>} />
-        {/* </Route> */}
+        <Route path="/schedules" element={<LoggedLayOut> <Specialization /></LoggedLayOut>} />
+        <Route path="/myschedules" element={<LoggedLayOut> <MySchedule/></LoggedLayOut>} />
         <Route path="/register" element={<Register />} />
+        <Route path="/myProfile" element={<LoggedLayOut> <MyProfile/></LoggedLayOut>} />
       </Routes>
     </>
   );

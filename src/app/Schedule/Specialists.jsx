@@ -16,6 +16,13 @@ const StyledBox = styled(Box)({
     padding: '5vh'
 });
 
+const StyledVerticalDivider = styled(Divider)({
+    height: '25px', // Altura del Divider
+    margin: '0 10px',
+    backgroundColor: '#000000',
+    borderRight:'3px solid #000000'
+});
+
 const usuariosDeEjemplo = [
     { id: 1, nombre: 'Dra. Meredith Grey', rol: 'Medicina Interna' },
     { id: 2, nombre: 'Dr. Alex Karev', rol: 'Medicina Interna' },
@@ -49,10 +56,13 @@ function Specialists({ searchValue }) {
                         <ListItem>
                             <ListItemText
                                 primary={<StyledTypography variant='h5'>{usuario.nombre}</StyledTypography>}
-                                secondary={<StyledTypography variant='h7' sx={{ marginLeft: '5vh' }}>{usuario.rol}</StyledTypography>}
+                            />
+                            {index < usuarios.length && <StyledVerticalDivider />}
+                            <ListItemText
+                                primary={<StyledTypography variant='h5'>{usuario.rol}</StyledTypography>}
                             />
                         </ListItem>
-                        {index < usuarios.length - 1 && <Divider />}
+                        {index < usuarios.length && <Divider sx={{borderBottom:'1px solid #ccc'}} />}
                     </React.Fragment>
                 ))}
             </List>
