@@ -10,6 +10,7 @@ import { useAuth } from '@/api/authProvider';
 
 export default function Register({ tipoUsuario }) {
     const { registerAction } = useAuth();
+    const [selectedFile, setSelectedFile] = useState(null);
     const [checked, setChecked] = useState(false);
     const [gender, setGender] = useState('');
     const [month, setMonth] = useState('');
@@ -17,7 +18,6 @@ export default function Register({ tipoUsuario }) {
     const [year, setYear] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
-    const [selectedFile, setSelectedFile] = useState(null);
     const [formData, setFormData] = useState({
         id: '',
         email: '',
@@ -27,12 +27,11 @@ export default function Register({ tipoUsuario }) {
         second_last_name: '',
         phone: '',
         sex: '',
-        birthdate: tipoUsuario === 'paciente' ? '' : null,
+        birthdate: '',
         address: '',
-        descripcion: tipoUsuario === 'medico' ? '' : null,
-        id_especialidad: tipoUsuario === 'medico' ? '' : null,
         user_type: tipoUsuario.toUpperCase()
     });
+
     const handleFormChange = (event) => {
         const { name, value } = event.target;
         if (name === 'confirmpassword') {
@@ -83,6 +82,10 @@ export default function Register({ tipoUsuario }) {
         setSelectedFile(file);
     };
 
+    const handleUploadButtonClick = () => {
+        document.getElementById('upload-file-input').click();
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -93,19 +96,16 @@ export default function Register({ tipoUsuario }) {
             }
         }
 
-        if (tipoUsuario === 'paciente') {
-            if (!formData.birthdate || !formData.birthdate.includes('-')) {
-                setError('Por favor, selecciona una fecha de nacimiento válida.');
-                return;
-            }
-        } else {
-            // validaciones para medico
+        if (!formData.birthdate || !formData.birthdate.includes('-')) {
+            setError('Por favor, selecciona una fecha de nacimiento válida.');
+            return;
         }
 
         if (formData.password !== confirmPassword) {
             setError('Las contraseñas no coinciden.');
             return;
         }
+
         // Log form data
         console.log("request 1:", formData);
         // Perform registration action
@@ -194,23 +194,26 @@ export default function Register({ tipoUsuario }) {
                         <Grid item>
                             <OButton
                                 title="CV"
+                                onClick={handleUploadButtonClick}
+                                disabled={!selectedFile}
                                 icon={<UploadIcon />}
                             />
                             <input
                                 type="file"
                                 style={{ display: 'none' }}
                                 onChange={handleFileInputChange}
+                                id="upload-file-input"
                                 accept='.pdf'
                             />
                         </Grid>
                         <Grid item xs>
-                            <OTextField
-                                topLabel=""
-                                placeholder="Nombre del archivo"
-                                inputType="custom"
-                                value={selectedFile ? selectedFile.name : ''}
-                                disabled
-                            />
+                                <OTextField
+                                    topLabel=""
+                                    placeholder="Nombre del archivo"
+                                    inputType="custom"
+                                    value={selectedFile ? selectedFile.name : ''}
+                                    disabled
+                                />
                         </Grid>
                     </Grid>
                 )}
