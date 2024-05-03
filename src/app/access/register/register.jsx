@@ -6,7 +6,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
 import UploadIcon from '@mui/icons-material/Upload';
 import { useState, useEffect } from 'react';
-import { useAuth, API_URL_BACKEND } from '@/api/authProvider';
+import { useAuth } from '@/api/authProvider';
+import { fetchEspecialidades } from '@/api/modules/apiHelpers';
 
 export default function Register({ tipoUsuario }) {
     const { registerAction } = useAuth();
@@ -22,20 +23,16 @@ export default function Register({ tipoUsuario }) {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        const fetchEspecialidades = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch(`${API_URL_BACKEND}${'/medico/Listar_Especialidades/'}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch especialidades');
-                }
-                const data = await response.json();
+                const data = await fetchEspecialidades();
                 setEspecialidades(data);
             } catch (error) {
-                console.error('Error fetching especialidades:', error);
+                console.log('no se pudieron traer las especialidades', error)
             }
         };
 
-        fetchEspecialidades();
+        fetchData();
     }, []);
 
     const [formData, setFormData] = useState({
