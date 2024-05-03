@@ -4,6 +4,7 @@ import OTextField from '@/components/OTextField';
 import { InputAdornment, Checkbox, FormControlLabel, Radio, RadioGroup, Grid, Typography, MenuItem } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
+import UploadIcon from '@mui/icons-material/Upload';
 import { useState } from 'react';
 import { useAuth } from '@/api/authProvider';
 
@@ -192,9 +193,10 @@ export default function Register({ tipoUsuario }) {
                     <Grid item xs={12} sm={6} container spacing={2}>
                         <Grid item>
                             <OButton
-                                title="Subir curriculum"
+                                title="CV"
                                 onClick={handleUploadButtonClick}
                                 disabled={!selectedFile}
+                                icon={<UploadIcon />}
                             />
                             <input
                                 type="file"
