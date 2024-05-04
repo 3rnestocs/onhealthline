@@ -1,10 +1,10 @@
 // apiHelpers.js
 
-import { API_URL_BACKEND } from "../axiosAPI";
+const API_URL_BACKEND = 'http://52.23.237.218/api';
 
 export async function fetchEspecialidades() {
     try {
-        const response = await fetch(`${API_URL_BACKEND}${'/medico/Listar_Especialidades/'}`);
+        const response = await fetch(`${API_URL_BACKEND}${'/medico/especialidades/listar/'}`);
         if (!response.ok) {
             throw new Error('Failed to fetch especialidades');
         }

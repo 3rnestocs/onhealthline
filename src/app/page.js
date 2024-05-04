@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import LoggedHeader from '@/components/LoggedHeader';
 import Home from './home/Home';
-import Access from './access/access';
+import Access from './access/Access';
 import Register from './access/register/Register';
 import LoggedLayOut from '@/components/Layouts/LoggedLayOut';
 import Specialization from './specialists/Specialization';

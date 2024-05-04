@@ -4,10 +4,10 @@ import OTextField from '@/components/OTextField';
 import { InputAdornment, Checkbox, FormControlLabel, Radio, RadioGroup, Grid, Typography, MenuItem } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
-import UploadIcon from '@mui/icons-material/Upload';
+// import UploadIcon from '@mui/icons-material/Upload';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/api/authProvider';
-import { fetchEspecialidades } from '@/api/modules/apiHelpers';
+import { fetchEspecialidades } from '@/api/apiHelpers';
 
 export default function Register({ tipoUsuario }) {
     const [especialidades, setEspecialidades] = useState([]);
@@ -67,18 +67,19 @@ export default function Register({ tipoUsuario }) {
         setFormData({ ...formData, birthdate: formattedDate });
     };
 
-    const [selectedFile, setSelectedFile] = useState(null);
-    const handleFileInputChange = (event) => {
-        const file = event.target.files[0];
-        setSelectedFile(file);
-    };
+    // const [selectedFile, setSelectedFile] = useState(null);
+    // const handleFileInputChange = (event) => {
+    //     const file = event.target.files[0];
+    //     setSelectedFile(file);
+    // };
 
-    const handleUploadButtonClick = () => {
-        document.getElementById('upload-file-input').click();
-    };
+    // const handleUploadButtonClick = () => {
+    //     document.getElementById('upload-file-input').click();
+    // };
 
     const handleEspecialidadChange = (event) => {
         setSelectedEspecialidad(event.target.value);
+        setFormData({ ...formData, id_especialidad: event.target.value });
     };
 
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -92,7 +93,9 @@ export default function Register({ tipoUsuario }) {
         second_last_name: '',
         phone: '',
         sex: '',
-        birthdate: '',
+        birthdate: tipoUsuario === 'paciente' ? '' : null,
+        id_especialidad: tipoUsuario === 'medico' ? '' : null,
+        descripcion: tipoUsuario === 'medico' ? '' : null,
         address: '',
         user_type: tipoUsuario.toUpperCase()
     });
@@ -110,14 +113,35 @@ export default function Register({ tipoUsuario }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        console.log('data:', formData);
+        var hasError = false;
         for (const key in formData) {
-            if (!formData[key]) {
-                setError('Por favor, completa todos los campos.');
-                return;
+            if (formData[key] === '' || formData[key] === ' ' || formData[key] === "" || formData[key] === " ") {
+                hasError = true;
+                console.log('has error void:', hasError, tipoUsuario, formData[key], key)
+                break;
+            }
+
+            if (formData[key] === null) {
+                
+                if (tipoUsuario === 'paciente' && (key === 'id_especialidad' || key === 'descripcion')) {
+                    hasError = false;
+                } else if (tipoUsuario === 'medico' && key === 'birthdate') {
+                    hasError = false;
+                } else {
+                    hasError = true;
+                    break;
+                }
+                console.log('has error null:', hasError, tipoUsuario, formData[key], key)
             }
         }
 
-        if (!formData.birthdate || !formData.birthdate.includes('-')) {
+        if (hasError === true) {
+            setError('Por favor, completa todos los campos.');
+            return;
+        }
+
+        if (tipoUsuario === 'paciente' && (!formData.birthdate || !formData.birthdate.includes('-'))) {
             setError('Por favor, selecciona una fecha de nacimiento válida.');
             return;
         }
@@ -127,9 +151,11 @@ export default function Register({ tipoUsuario }) {
             return;
         }
 
-        // Log form data
-        console.log("request 1:", formData);
-        // Perform registration action
+        if (!checked) {
+            setError('Por favor, acepta los términos y condiciones.');
+            return;
+        }
+
         registerAction(formData);
     };
 
@@ -199,7 +225,7 @@ export default function Register({ tipoUsuario }) {
                         icon={<PhoneIcon position="start" />}
                     />
                 </Grid>
-                <Grid item xs={12} sm={tipoUsuario == "medico" ? 6 : 12}>
+                <Grid item xs={12} sm={12}>
                     <OTextField
                         topLabel="Direccion"
                         placeholder="Direccion"
@@ -210,7 +236,7 @@ export default function Register({ tipoUsuario }) {
                         onChange={handleFormChange}
                     />
                 </Grid>
-                {tipoUsuario === 'medico' && (
+                {/* {tipoUsuario === 'medico' && (
                     <Grid item xs={12} sm={6} container spacing={2}>
                         <Grid item>
                             <OButton
@@ -237,7 +263,7 @@ export default function Register({ tipoUsuario }) {
                             />
                         </Grid>
                     </Grid>
-                )}
+                )} */}
                 <Grid item xs={12} sm={6}>
                     <OTextField
                         topLabel="Contraseña"
@@ -267,8 +293,8 @@ export default function Register({ tipoUsuario }) {
                                 topLabel="Descripcion medica"
                                 placeholder="Escribe una breve descripcion sobre tus labores medicas aquí"
                                 inputType="custom"
-                                name="message"
-                                value={formData.message}
+                                name="descripcion"
+                                value={formData.descripcion}
                                 onChange={handleFormChange}
                             />
                         </Grid>
@@ -281,7 +307,7 @@ export default function Register({ tipoUsuario }) {
                                 onChange={handleEspecialidadChange}
                             >
                                 {especialidades.map((especialidad) => (
-                                    <MenuItem key={especialidad.id} value={especialidad.id}>
+                                    <MenuItem key={especialidad.id.toString()} value={especialidad.id.toString()}>
                                         {especialidad.name}
                                     </MenuItem>
                                 ))}

@@ -51,7 +51,7 @@ const LoggedHeader = ({ onMenuClick, onLoginClick, type }) => {
   return (
     <StyledAppBar position='sticky'>
       <StyledBox className='logo'>
-        <Link to='/home'>
+        <Link to='/'>
           <Image
             alt='logo'
             src={'/assets/logo_test.svg'}
