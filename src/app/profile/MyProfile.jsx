@@ -107,6 +107,7 @@ const MyProfile = () => {
     const toggleEditMode = () => {
         setEditMode(!editMode);
         setChangesMade(false);
+        console.log(usuario.user_type)
     };
 
     const applyChanges = () => {

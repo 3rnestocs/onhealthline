@@ -40,7 +40,7 @@ function Login({ tipoUsuario }) {
   };
 
   return (
-    <Grid container width={'25vw'} direction={'column'} alignItems='center' marginTop={1} component={'form'} onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+    <Grid container width={'25vw'} direction={'column'} alignItems='center' marginTop={5} component={'form'} onSubmit={handleSubmit} noValidate>
       <OTextField
         topLabel="Correo electrónico"
         placeholder="Ingresa tu correo electrónico"
@@ -60,17 +60,17 @@ function Login({ tipoUsuario }) {
         value={formData.password}
         onChange={handleChange}
       />
-      <OButton title="Iniciar sesión" />
+      <OButton title="Iniciar sesión" sx={{ marginTop: '16px' }} />
       {error && (
         <Typography variant="body2" color="error">
           {error}
         </Typography>
       )}
-      <Grid item xs>
+      {/* <Grid item xs>
         <Typography variant="body2">
           ¿Olvidaste tu contraseña? <Link to='/access' style={{ color: '#2376a1' }}>Recupérala aquí</Link>
         </Typography>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }

@@ -9,13 +9,22 @@ import Register from './register/register';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" sx={{marginTop: '16px'}} {...props}>
+    <Typography variant="body2" color="text.secondary" align="center" sx={{ marginTop: '16px' }} {...props}>
       {'Copyright © OnHealthLine '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
+
+const StyledTypography = styled(Typography)({
+  color: '#2373a0',
+  padding: '5px',
+  marginBottom: '10px',
+  fontSize: '2rem',
+  fontWeight: 'bold',
+  textAlign: 'center',
+});
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -72,11 +81,11 @@ export default function Access() {
   };
   const handleRegisterAction = () => {
     setIsShowingLogin(false);
-    setValue(0);
+    setValue(value);
   };
   const handleLoginAction = () => {
     setIsShowingLogin(true);
-    setValue(0);
+    setValue(value);
   };
 
   const theme = useTheme();
@@ -96,50 +105,45 @@ export default function Access() {
     >
       <MainBox sx={{ height: '70vh' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }} width={"100%"}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="inherit"
-            variant="fullWidth"
-            aria-label="full width tabs example"
-          >
-            <Tab
-              iconPosition="start"
-              icon={<SickIcon />}
-              label={<Typography variant="h5">Soy paciente</Typography>} // Customize the label with Typography
-              {...a11yProps(0)}
-              sx={{
-                color: (theme) => (value === 0 ? '#10587e' : 'gray'), // Customize color based on tab selection
-                '& .MuiSvgIcon-root': {
-                  color: (theme) => ('#10587e'), // Customize icon color based on tab selection
-                },
-              }}
-            />
-            <Tab
-              iconPosition="start"
-              icon={<LocalHospitalIcon />}
-              label={<Typography variant="h5">Soy doctor</Typography>} // Customize the label with Typography
-              {...a11yProps(1)}
-              sx={{
-                color: (theme) => (value === 1 ? '#10587e' : 'gray'), // Customize color based on tab selection
-                '& .MuiSvgIcon-root': {
-                  color: (theme) => ('#10587e'), // Customize icon color based on tab selection
-                },
-              }}
-            />
-          </Tabs>
+          {!isShowingLogin && (
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="primary"
+              textColor="inherit"
+              variant="fullWidth"
+              aria-label="full width tabs example"
+            >
+              <Tab
+                iconPosition="start"
+                icon={<SickIcon />}
+                label={<Typography variant="h5">Soy paciente</Typography>} // Customize the label with Typography
+                {...a11yProps(0)}
+                sx={{
+                  color: (theme) => (value === 0 ? '#10587e' : 'gray'), // Customize color based on tab selection
+                  '& .MuiSvgIcon-root': {
+                    color: (theme) => ('#10587e'), // Customize icon color based on tab selection
+                  },
+                }}
+              />
+              <Tab
+                iconPosition="start"
+                icon={<LocalHospitalIcon />}
+                label={<Typography variant="h5">Soy doctor</Typography>} // Customize the label with Typography
+                {...a11yProps(1)}
+                sx={{
+                  color: (theme) => (value === 1 ? '#10587e' : 'gray'), // Customize color based on tab selection
+                  '& .MuiSvgIcon-root': {
+                    color: (theme) => ('#10587e'), // Customize icon color based on tab selection
+                  },
+                }}
+              />
+            </Tabs>
+          )}
+          {isShowingLogin && (
+            <StyledTypography variant="h5">Bienvenido a OnHealthLine</StyledTypography>
+          )}
         </Box>
-        {value === 0 && isShowingLogin && (
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            <Login tipoUsuario={"paciente"} />
-          </TabPanel>
-        )}
-        {value === 1 && isShowingLogin && (
-          <TabPanel value={value} index={1} dir={theme.direction}>
-            <Login tipoUsuario={"medico"} />
-          </TabPanel>
-        )}
         {value === 0 && !isShowingLogin && (
           <TabPanel value={value} index={0} dir={theme.direction}>
             <Register tipoUsuario={"paciente"} />
@@ -150,14 +154,18 @@ export default function Access() {
             <Register tipoUsuario={"medico"} />
           </TabPanel>
         )}
-        <Box display="flex" justifyContent="center">
+        {isShowingLogin && (
+          <Login />
+        )}
+
+        <Box display="flex" justifyContent="center" sx={{marginTop: '16px' }}>
           {isShowingLogin ? (
             <Typography variant="body2">
-              ¿No tienes una cuenta? <button onClick={() => handleRegisterAction() } style={{ color: '#2376a1', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Regístrate aquí</button>
+              ¿No tienes una cuenta? <button onClick={() => handleRegisterAction()} style={{ color: '#2376a1', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Regístrate aquí</button>
             </Typography>
           ) : (
             <Typography variant="body2">
-              ¿Ya tienes una cuenta? <button onClick={() => handleLoginAction() } style={{ color: '#2376a1', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Inicia sesión aquí</button>
+              ¿Ya tienes una cuenta? <button onClick={() => handleLoginAction()} style={{ color: '#2376a1', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>Inicia sesión aquí</button>
             </Typography>
           )}
         </Box>
