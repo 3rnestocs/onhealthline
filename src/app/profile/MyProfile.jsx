@@ -15,22 +15,23 @@ const ContainerContent = styled(Box)({
 });
 
 const StyledButton = styled(Button)({
-    border: '4px solid #2373a0',
-    borderRadius: '15px',
+    border: '4px solid #10587e',
+    borderRadius: '8px',
     minWidth: '300px',
-    minHeight: '70px',
+    minHeight: '50px',
     color: '#ffffff',
-    backgroundColor: '#2373a0',
-    opacity: '0.8',
+    backgroundColor: '#10587e',
+    opacity: '1',
     margin: '10px',
     '&:hover': {
-        backgroundColor: '#2373a0',
         opacity: '1',
+        backgroundColor: '#10587e',
     },
-    '&.changeData': {
-        minWidth: '300x',
-        minHeight: '30px',
-    }
+    '&disabled': {
+        opacity: '0.5',
+        backgroundColor: '#10587e',
+        color: '#ffffff',
+    },
 })
 
 const StyledBox = styled(Box)({
@@ -223,12 +224,12 @@ const MyProfile = () => {
                                 defaultValue={usuario.address}
                             />
                         </StyledGrid>
-                        <StyledButton className='changeData' disabled={!editMode}>Aplicar Cambios</StyledButton>
+                        <StyledButton disabled={!editMode}>Aplicar Cambios</StyledButton>
                     </Grid>
                 </StyledBox>
-                <StyledTypography variant='h7' sx={{ opacity: "0.7", textAlign: "left" }}>Cambiar Contraseña</StyledTypography>
                 <StyledBox className='SettingsPassword'>
-                    <Box sx={{ margin: 'vh' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: '20vw' }}>
+                        <StyledTypography variant='h7' sx={{ opacity: "0.7", textAlign: "left" }}>Cambiar Contraseña</StyledTypography>
                         <OTextField
                             placeholder='Contraseña actual'
                             topLabel="Contraseña actual"
@@ -240,8 +241,6 @@ const MyProfile = () => {
                             autoComplete="currentPassword"
                             autoFocus
                         />
-                    </Box>
-                    <Box>
                         <OTextField
                             placeholder='Nueva Contraseña'
                             topLabel="Nueva Contraseña"
@@ -256,8 +255,6 @@ const MyProfile = () => {
                             error={!passwordMatch}
                             helperText={!passwordMatch && "Las contraseñas no coinciden"}
                         />
-                    </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                         <OTextField
                             placeholder='Repetir Nueva Contraseña'
                             topLabel="Repetir Nueva Contraseña"
@@ -272,9 +269,8 @@ const MyProfile = () => {
                             error={!passwordMatch}
                             helperText={!passwordMatch && "Las contraseñas no coinciden"}
                         />
-                        <StyledButton sx={{ width: '50%', height: '30px' }} disabled={!passwordMatch || !passwordFieldsNotEmpty}>Cambiar Contraseña</StyledButton>
+                        <StyledButton sx={{ width: '100%', height: '30px' }} disabled={!passwordMatch || !passwordFieldsNotEmpty}>Cambiar Contraseña</StyledButton>
                     </Box>
-
                 </StyledBox>
             </StyledBox>
         </ContainerContent>
