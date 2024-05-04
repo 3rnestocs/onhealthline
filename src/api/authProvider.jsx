@@ -96,8 +96,29 @@ const AuthProvider = ({ children }) => {
         }
     };
 
+    const requestDoctorSchedule = async (doctor_id) => {
+        try {
+            const response = await fetch(`${API_URL_BACKEND}/medico/horario/obtener/?id_medico=${doctor_id}`, {
+                method: "GET",
+                headers: {
+                    // "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json",
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+    
+            const doctors = await response.json();
+            return doctors;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ token, user, loginAction, registerAction, logOut, listAllDoctors }}>
+        <AuthContext.Provider value={{ token, user, loginAction, registerAction, logOut, listAllDoctors, requestDoctorSchedule }}>
             {children}
         </AuthContext.Provider>
     );

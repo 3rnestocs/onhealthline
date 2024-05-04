@@ -3,7 +3,7 @@ import { List, ListItem, IconButton, Typography, Box } from '@mui/material'
 import { styled } from '@mui/system'
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom'
-
+import { getUser } from "../utils/localStorageHelper";
 
 const StyledIconButton = styled(IconButton)({
     color: '#ffffff',
@@ -23,11 +23,14 @@ const StyledTypography = styled(Typography)({
 })
 
 const LoggedMenu = () => {
+    const usuario = getUser();
+
     return (
 
         <Box sx={{ display: 'flex', padding: '30px 10px' }}>
             <List>
-                <ListItem>
+                {usuario.user_type == 'PACIENTE' && (
+                    <ListItem>
                     <Link to='/schedules'>
                         <img
                             alt='menu date'
@@ -40,6 +43,7 @@ const LoggedMenu = () => {
                         <StyledTypography> Agendar Cita</StyledTypography>
                     </Link>
                 </ListItem>
+                )}
 
                 <ListItem>
 

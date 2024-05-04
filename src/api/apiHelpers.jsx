@@ -15,29 +15,3 @@ export async function fetchEspecialidades() {
         throw error;
     }
 }
-
-export const creaHorarioMedico = async (data) => {
-    try {
-        const response = await fetch(`${API_URL_BACKEND}/medico/horario/crear/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data),
-        });
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.message}`);
-        }
-        
-        const res = await response.json();
-        
-        if (res.message) {
-            console.log("response success:", res);
-        } else {
-            throw new Error("Invalid response format");
-        }
-    } catch (err) {
-        throw new Error(err);
-    }
-};
