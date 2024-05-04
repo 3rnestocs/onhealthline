@@ -79,7 +79,7 @@ const ScheduleButton = styled(Button)({
 
 const Schedule = ({ doctorData, onReturn }) => {
     const today = new Date();
-    const {id,nombre} = doctorData
+    const {cedula,nombre} = doctorData
     const [selectedDate, setSelectedDate] = useState(today);
 
     // Función para manejar los cambios en la fecha seleccionada
@@ -103,7 +103,7 @@ const Schedule = ({ doctorData, onReturn }) => {
                     <StyledBox className='ScheduleButton_Box'>
 
                         <StyledTypography variant='h6'>
-                            Horario Mañana {nombre} - {id}
+                            Horario Mañana {nombre} - {cedula}
                         </StyledTypography>
                         <Box sx={{ display: 'flex', flexDirection: 'row', }}>
                             <ScheduleButton >9:00</ScheduleButton>
