@@ -80,21 +80,17 @@ const Schedule = ({ doctorData, onReturn }) => {
     const { cedula, nombre } = doctorData;
     const [selectedDate, setSelectedDate] = useState(today);
     const { requestDoctorSchedule } = useAuth();
+    const { agendarCita } = useAuth();
     const [schedule, setSchedule] = useState(null);
     const [availableHours, setAvailableHours] = useState([]);
     const [selectedHour, setSelectedHour] = useState([]);
-    const [formData, setFormData] = useState({
-        start_at: '',
-        end_at: '',
-        doctor_id: cedula
-    });
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const scheduleData = await requestDoctorSchedule(cedula);
                 setSchedule(scheduleData[0]);
-                console.log('scheduleDAta', scheduleData[0].dias_semana)
+                console.log('scheduleData', scheduleData[0].dias_semana)
                 setAvailableHours(segmentHours(scheduleData[0].hora_inicio, scheduleData[0].hora_fin));
             } catch (error) {
                 console.error('Error fetching schedule:', error.message);
@@ -137,7 +133,6 @@ const Schedule = ({ doctorData, onReturn }) => {
         }
     };
 
-
     const tileDisabled = ({ date }) => {
         return !isSelectableDay(date);
     };
@@ -145,6 +140,54 @@ const Schedule = ({ doctorData, onReturn }) => {
     const handleDateChange = (date) => {
         setSelectedDate(date);
         console.log('fecha seleccionada:', date)
+    };
+
+    const handleAgendar = async (event) => {
+        event.preventDefault();
+
+        const { startDate, endDate } = generateDateTimeStrings(selectedDate, selectedHour);
+
+        const formData = {
+            start_at: startDate,
+            end_at: endDate,
+            doctor_id: cedula
+        }
+        console.log('data:', formData)
+        agendarCita(formData);
+    }
+
+    const convertTo24Hour = (time) => {
+        let [hours, minutes, period] = time.match(/^(\d{1,2})(?::(\d{2}))?\s*([ap]m)?$/i).slice(1, 4);
+        hours = parseInt(hours, 10);
+        if (period == 'AM' && hours === 12) {
+            hours = 0; // Handle 12AM as 0
+        } else if (period == 'PM' && hours < 12) {
+            hours += 12; // Add 12 hours for PM times except 12PM
+        }
+        if (hours < 10) hours = '0' + hours; // Add leading zero if single digit
+        if (minutes == undefined) minutes = '00'; // Default to '00' if not provided
+        if (minutes.length == 1) minutes = '0' + minutes; // Add leading zero if single digit
+        return `${hours}:${minutes}:00`;
+    };
+
+    const generateDateTimeStrings = (selectedDate, selectedHour) => {
+        // Step 1: Extract year, month, and day from selectedDate
+        const year = selectedDate.getFullYear();
+        const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+        const day = String(selectedDate.getDate()).padStart(2, '0');
+
+        // Step 2: Extract start and end times from selectedHour
+        const [start, end] = selectedHour.split('-');
+
+        // Step 3: Convert start and end times to 24-hour format and split them into hours and minutes
+        const startHour = convertTo24Hour(start)
+        const endHour = convertTo24Hour(end)
+
+        // Step 4: Combine date, hours, and minutes to create start_at and end_at strings
+        const startDate = `${year}-${month}-${day}T${String(startHour).padStart(2, '0')}`;
+        const endDate = `${year}-${month}-${day}T${String(endHour).padStart(2, '0')}`;
+
+        return { startDate, endDate };
     };
 
     return (
@@ -160,11 +203,9 @@ const Schedule = ({ doctorData, onReturn }) => {
                 />
 
                 <StyledBox className='ScheduleMain_Box'>
-
                     <StyledBox className='ScheduleButton_Box'>
-
                         <StyledTypography variant='h6'>
-                            Horario Mañana {nombre} - {cedula}
+                            Horario de {nombre} - {cedula}
                         </StyledTypography>
                         <OTextField
                             required
@@ -181,32 +222,18 @@ const Schedule = ({ doctorData, onReturn }) => {
                         </OTextField>
                     </StyledBox>
 
-                    <StyledBox className='ScheduleButton_Box'>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                            <img
-                                alt='icono de calendario'
-                                src={'/assets/ICONCalendarNo.png'} width={50} height={50}
-                            />
-                            <StyledTypography variant='h6'>
-                                Horario Tarde
-                            </StyledTypography>
-                        </Box>
-
-
-
-                    </StyledBox>
-
+                    <Box margin={'auto'}>
+                        <StyledTypography variant='h6'>Los horarios pueden variar según </StyledTypography>
+                        <StyledTypography variant='h6'>la disponibilidad del doctor y el día.</StyledTypography>
+                    </Box>
                 </StyledBox>
 
             </StyledBox>
-
-            <StyledTypography variant='h6' sx={{ mt: '5vh', mb: '5vh' }}>Los horarios pueden variar según la disponibilidad del doctor y el día.</StyledTypography>
-
-            <StyledBox className='Button_Box'>
+            <StyledBox className='Button_Box' sx={{ mt: 5 }}>
 
                 <StyledButton className='return' onClick={onReturn}>Volver</StyledButton>
 
-                <StyledButton className='scheduleSubmit'>Agendar</StyledButton>
+                <StyledButton className='scheduleSubmit' onClick={handleAgendar}>Agendar</StyledButton>
             </StyledBox>
 
         </ContainerContent>

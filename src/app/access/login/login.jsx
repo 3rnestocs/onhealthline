@@ -2,11 +2,9 @@ import OButton from '../../../components/OButton';
 import OTextField from '../../../components/OTextField';
 import { Grid, Typography } from '@mui/material';
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../../../api/authProvider';
-// import { useDispatch } from 'react-redux';
-// import { login } from '@/redux/user/userSlice';
 
 function Login({ tipoUsuario }) {
   const navigate = useNavigate();
@@ -16,7 +14,6 @@ function Login({ tipoUsuario }) {
     password: '',
   });
   const [error, setError] = useState('');
-  // const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -29,8 +26,6 @@ function Login({ tipoUsuario }) {
       setError('Los campos son inválidos, por favor llénalos correctamente.');
       return;
     }
-    console.log("request 1:", formData);
-    // dispatch(login(formData))
     try {
       await loginAction(formData);
     } catch (err) {
@@ -66,11 +61,6 @@ function Login({ tipoUsuario }) {
           {error}
         </Typography>
       )}
-      {/* <Grid item xs>
-        <Typography variant="body2">
-          ¿Olvidaste tu contraseña? <Link to='/access' style={{ color: '#2376a1' }}>Recupérala aquí</Link>
-        </Typography>
-      </Grid> */}
     </Grid>
   );
 }

@@ -18,8 +18,6 @@ const StyledTypography = styled(Typography)({
     color: '#ffffff',
     padding: '5px',
     fontWeight: 'bold',
-
-
 })
 
 const LoggedMenu = () => {
@@ -66,9 +64,9 @@ const LoggedMenu = () => {
 
 
                 <ListItem>
-                    <Link to='/'>
+                    <Link to='/myProfile'>
                         <img
-                            alt='menu profile'
+                            alt='profile'
                             src={"../../public/assets/ICONMenuProfile.PNG"}
                             width={50} height={50}
                         />

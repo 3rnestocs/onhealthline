@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
                 localStorage.setItem("user", JSON.stringify(res.user))
                 localStorage.setItem("token", res.token);
                 console.log("user:", res.user);
-                navigate("/schedules");
+                navigate(res.user.user_type === "PACIENTE" ? "/schedules" : "/myschedules");
             } else {
                 throw new Error("Invalid response format");
             }
@@ -63,6 +63,34 @@ const AuthProvider = ({ children }) => {
             } else {
                 throw new Error("Invalid response format");
             }
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+
+    const agendarCita = async (data) => {
+        try {
+            const response = await fetch(`${API_URL_BACKEND}/citas/create-event/`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Token ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            
+            const res = await response.json();
+            
+            console.log("response:", res);
+            // if (res.message) {
+
+            // } else {
+            //     throw new Error("Invalid response format");
+            // }
         } catch (err) {
             throw new Error(err);
         }
@@ -101,7 +129,6 @@ const AuthProvider = ({ children }) => {
             const response = await fetch(`${API_URL_BACKEND}/medico/horario/obtener/?id_medico=${doctor_id}`, {
                 method: "GET",
                 headers: {
-                    // "Authorization": `Bearer ${localStorage.getItem("token")}`,
                     "Content-Type": "application/json",
                 }
             });
@@ -110,15 +137,15 @@ const AuthProvider = ({ children }) => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
     
-            const doctors = await response.json();
-            return doctors;
+            const schedule = await response.json();
+            return schedule;
         } catch (error) {
             throw new Error(error.message);
         }
     };
 
     return (
-        <AuthContext.Provider value={{ token, user, loginAction, registerAction, logOut, listAllDoctors, requestDoctorSchedule }}>
+        <AuthContext.Provider value={{ token, user, loginAction, registerAction, logOut, listAllDoctors, requestDoctorSchedule, agendarCita }}>
             {children}
         </AuthContext.Provider>
     );
