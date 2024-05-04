@@ -3,6 +3,7 @@ import { Box, Typography, Divider, Button, Grid } from '@mui/material'
 import { styled } from '@mui/system';
 import OTextField from '../../components/OTextField';
 import { getUser } from '../../utils/localStorageHelper';
+import { useNavigate } from 'react-router-dom';
 
 const ContainerContent = styled(Box)({
     display: 'flex',
@@ -24,7 +25,7 @@ const StyledButton = styled(Button)({
     opacity: '1',
     margin: '10px',
     '&:hover': {
-        opacity: '1',
+        opacity: '0.8',
         backgroundColor: '#10587e',
     },
     '&disabled': {
@@ -96,6 +97,7 @@ const StyledGrid = styled(Grid)({
 });
 
 const MyProfile = () => {
+    const navigate = useNavigate();
     const usuario = getUser();
     const [editMode, setEditMode] = useState(false);
     const [changesMade, setChangesMade] = useState(false);
@@ -104,6 +106,10 @@ const MyProfile = () => {
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [passwordMatch, setPasswordMatch] = useState(true);
     const [passwordFieldsNotEmpty, setPasswordFieldsNotEmpty] = useState(false);
+
+    const handleSelectSchedule = () => {
+        navigate('/select-schedule');
+    };
 
     const toggleEditMode = () => {
         setEditMode(!editMode);
@@ -227,51 +233,54 @@ const MyProfile = () => {
                         <StyledButton disabled={!editMode}>Aplicar Cambios</StyledButton>
                     </Grid>
                 </StyledBox>
-                <StyledBox className='SettingsPassword'>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: '20vw' }}>
-                        <StyledTypography variant='h7' sx={{ opacity: "0.7", textAlign: "left" }}>Cambiar Contraseña</StyledTypography>
-                        <OTextField
-                            placeholder='Contraseña actual'
-                            topLabel="Contraseña actual"
-                            width="100%"
-                            inputType="password"
-                            name="currentPassword"
-                            required
-                            id="currentPassword"
-                            autoComplete="currentPassword"
-                            autoFocus
-                        />
-                        <OTextField
-                            placeholder='Nueva Contraseña'
-                            topLabel="Nueva Contraseña"
-                            width="100%"
-                            inputType="password"
-                            name="newPassword"
-                            required
-                            id="newPassword"
-                            autoComplete="newPassword"
-                            autoFocus
-                            onChange={handleNewPasswordChange}
-                            error={!passwordMatch}
-                            helperText={!passwordMatch && "Las contraseñas no coinciden"}
-                        />
-                        <OTextField
-                            placeholder='Repetir Nueva Contraseña'
-                            topLabel="Repetir Nueva Contraseña"
-                            width="100%"
-                            inputType="password"
-                            name="confirmNewPassword"
-                            required
-                            id="confirmNewPassword"
-                            autoComplete="confirmNewPassword"
-                            autoFocus
-                            onChange={handleConfirmNewPasswordChange}
-                            error={!passwordMatch}
-                            helperText={!passwordMatch && "Las contraseñas no coinciden"}
-                        />
-                        <StyledButton sx={{ width: '100%', height: '30px' }} disabled={!passwordMatch || !passwordFieldsNotEmpty}>Cambiar Contraseña</StyledButton>
-                    </Box>
-                </StyledBox>
+                <Grid container display={'flex'} flexDirection={'row'}>
+                    <StyledBox className='SettingsPassword'>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: '20vw' }}>
+                            <StyledTypography variant='h7' sx={{ opacity: "0.7", textAlign: "left" }}>Cambiar Contraseña</StyledTypography>
+                            <OTextField
+                                placeholder='Contraseña actual'
+                                topLabel="Contraseña actual"
+                                width="100%"
+                                inputType="password"
+                                name="currentPassword"
+                                required
+                                id="currentPassword"
+                                autoComplete="currentPassword"
+                                autoFocus
+                            />
+                            <OTextField
+                                placeholder='Nueva Contraseña'
+                                topLabel="Nueva Contraseña"
+                                width="100%"
+                                inputType="password"
+                                name="newPassword"
+                                required
+                                id="newPassword"
+                                autoComplete="newPassword"
+                                autoFocus
+                                onChange={handleNewPasswordChange}
+                                error={!passwordMatch}
+                                helperText={!passwordMatch && "Las contraseñas no coinciden"}
+                            />
+                            <OTextField
+                                placeholder='Repetir Nueva Contraseña'
+                                topLabel="Repetir Nueva Contraseña"
+                                width="100%"
+                                inputType="password"
+                                name="confirmNewPassword"
+                                required
+                                id="confirmNewPassword"
+                                autoComplete="confirmNewPassword"
+                                autoFocus
+                                onChange={handleConfirmNewPasswordChange}
+                                error={!passwordMatch}
+                                helperText={!passwordMatch && "Las contraseñas no coinciden"}
+                            />
+                            <StyledButton sx={{ width: '100%', height: '30px' }} disabled={!passwordMatch || !passwordFieldsNotEmpty}>Cambiar Contraseña</StyledButton>
+                        </Box>
+                    </StyledBox>
+                    <StyledButton sx={{ height: '30px' }} onClick={handleSelectSchedule}>Agregar horarios</StyledButton>
+                </Grid>
             </StyledBox>
         </ContainerContent>
     );

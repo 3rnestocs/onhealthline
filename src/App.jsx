@@ -12,6 +12,8 @@ import AuthProvider from '../src/api/authProvider';
 import MyProfile from '../src/app/profile/MyProfile'
 import Access from '../src/app/access/Access';
 import Schedule from '../src/app/Schedule/Schedule'
+import SelectSchedule from './app/Schedule/SelectSchedule';
+
 function App() {
   return (
     <BrowserRouter>
@@ -50,7 +52,7 @@ function Content() {
   }, [location.pathname]);
 
   useEffect(() => {
-    setShowAppBar(!['/schedules', '/myschedules','/myProfile'].includes(location.pathname));
+    setShowAppBar(!['/schedules', '/myschedules','/myProfile', '/select-schedule'].includes(location.pathname));
   }, [location.pathname]);
 
   return (
@@ -69,6 +71,7 @@ function Content() {
         <Route path="/myschedules" element={<LoggedLayOut> <MySchedule/></LoggedLayOut>} />
         <Route path="/register" element={<Register />} />
         <Route path="/myProfile" element={<LoggedLayOut> <MyProfile/></LoggedLayOut>} />
+        <Route path="/select-schedule" element={<LoggedLayOut> <SelectSchedule/></LoggedLayOut>} />
       </Routes>
     </>
   );
