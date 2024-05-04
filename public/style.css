@@ -6,3 +6,6 @@
     border-radius: 300px;
     
 }
+html{
+    overflow-x: hidden;
+}

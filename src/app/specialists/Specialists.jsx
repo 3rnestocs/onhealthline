@@ -1,9 +1,8 @@
-// Specialists.jsx
-
 import React, { useState, useEffect } from 'react';
 import { List, ListItem, ListItemText, Typography, Box, Divider } from '@mui/material';
 import { styled } from '@mui/system';
 import DoctorProfile from '../profile/DoctorProfile';
+import { useAuth } from '../../api/authProvider'
 
 const StyledTypography = styled(Typography)({
     color: '#2373a0',
@@ -26,70 +25,38 @@ const StyledVerticalDivider = styled(Divider)({
     borderRight: '3px solid #000000',
 });
 
-const usuariosDeEjemplo = [
-    { 
-        id: 1, 
-        nombre: 'Dra. Meredith Grey', 
-        rol: 'Medicina Interna',
-        descripcion: 'Dedicada a prevenir, diagnosticar y tratar enfermedades comunes en pacientes de todas las edades. Su enfoque está en la atención integral y la derivación adecuada a especialistas cuando sea necesario. Médico cirujano en la Universidad Central de Venezuela. Médico general en la Universidad de Los Andes.'
-    },
-    { 
-        id: 2, 
-        nombre: 'Dr. Alex Karev', 
-        rol: 'Medicina Interna',
-        descripcion: 'Dedicado a prevenir, diagnosticar y tratar enfermedades comunes en pacientes de todas las edades. Su enfoque está en la atención integral y la derivación adecuada a especialistas cuando sea necesario. Médico cirujano en la Universidad Central de Venezuela. Médico general en la Universidad de Los Andes.'
-    },
-    { 
-        id: 3, 
-        nombre: 'Dra. Miranda Bailey', 
-        rol: 'Pediatria',
-        descripcion: 'Dedicada a prevenir, diagnosticar y tratar enfermedades comunes en pacientes pediátricos. Su enfoque está en la atención integral y la derivación adecuada a especialistas cuando sea necesario. Médico cirujano en la Universidad Central de Venezuela. Médico general en la Universidad de Los Andes.'
-    },
-    { 
-        id: 4, 
-        nombre: 'Dr. Derek Shepherd', 
-        rol: 'Psiquiatria',
-        descripcion: 'Dedicado a prevenir, diagnosticar y tratar trastornos psiquiátricos. Su enfoque está en la atención integral y la derivación adecuada a especialistas cuando sea necesario. Médico cirujano en la Universidad Central de Venezuela. Médico general en la Universidad de Los Andes.'
-    },
-    { 
-        id: 5, 
-        nombre: 'Dra. Cristina Yang', 
-        rol: 'Dermatologia',
-        descripcion: 'Dedicada a prevenir, diagnosticar y tratar enfermedades de la piel. Su enfoque está en la atención integral y la derivación adecuada a especialistas cuando sea necesario. Médico cirujano en la Universidad Central de Venezuela. Médico general en la Universidad de Los Andes.'
-    }
-];
-
-
 function Specialists({ searchValue, onDoctorSelect }) {
-    const [usuarios, setUsuarios] = useState(usuariosDeEjemplo);
+    const [doctors, setDoctors] = useState([]);
+    const { listAllDoctors } = useAuth();
 
     useEffect(() => {
-        if (searchValue) {
-            const filteredUsuarios = usuariosDeEjemplo.filter(usuario =>
-                usuario.nombre.toLowerCase().includes(searchValue.toLowerCase()) ||
-                usuario.rol.toLowerCase().includes(searchValue.toLowerCase())
-            );
-            setUsuarios(filteredUsuarios);
-        } else {
-            setUsuarios(usuariosDeEjemplo);
-        }
-    }, [searchValue]);
+        const fetchData = async () => {
+            try {
+                const doctorsData = await listAllDoctors();
+                setDoctors(doctorsData);
+            } catch (error) {
+                console.error('Error fetching doctors:', error.message);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <StyledBox>
             <List>
-                {usuarios.map((usuario, index) => (
-                    <React.Fragment key={usuario.id}>
-                        <ListItem button onClick={() => onDoctorSelect(usuario)}>
+                {doctors.map((doctor, index) => (
+                    <React.Fragment key={doctor.id}>
+                        <ListItem button onClick={() => onDoctorSelect(doctor)}>
                             <ListItemText
-                                primary={<StyledTypography variant='h5'>{usuario.nombre}</StyledTypography>}
+                                primary={<StyledTypography variant='h5'>{doctor.nombre}</StyledTypography>}
                             />
-                            {index < usuarios.length && <StyledVerticalDivider />}
+                            {index < doctors.length && <StyledVerticalDivider />}
                             <ListItemText
-                                secondary={<StyledTypography variant='h5'>{usuario.rol}</StyledTypography>}
+                                secondary={<StyledTypography variant='h5'>{doctor.especialidad}</StyledTypography>}
                             />
                         </ListItem>
-                        {index < usuarios.length && <Divider sx={{ borderBottom: '1px solid #ccc' }} />}
+                        {index < doctors.length && <Divider sx={{ borderBottom: '1px solid #ccc' }} />}
                     </React.Fragment>
                 ))}
             </List>

@@ -1,32 +1,19 @@
 import React from 'react';
-import { Container, Typography, Box } from '@mui/material';
+import {Box } from '@mui/material'
+import LandingOne from './LadingOne'
+import LandingAbout from './LandingAbout'
+import OurDoctors from './OurDoctors'
+import Services from './Services'
+import Footer from './Footer'
+
 export default function Home() {
-    return (
-        <>
-        <Box
-            backgroundColor={'#e6f9f6'}
-            display={'flex'}
-            alignItems={'center'}
-            justifyContent={'flex-start'}
-            width={'100vw'}
-            height={'93vh'}
-            overflow={'hidden'}
-        >
-            <Container>
-                <Typography variant="h4" gutterBottom>
-                    Body
-                </Typography>
-                <Typography variant="body1">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec
-                    ullamcorper nunc. Nulla facilisi. Mauris auctor, nunc vitae
-                    consectetur tincidunt, nisl urna tincidunt nunc, id lacinia nunc
-                    justo et nunc. Sed vitae nunc auctor, aliquet nunc id, tincidunt
-                    nunc. Sed nec ullamcorper nunc. Nulla facilisi. Mauris auctor, nunc
-                    vitae consectetur tincidunt, nisl urna tincidunt nunc, id lacinia
-                    nunc justo et nunc.ss
-                </Typography>
-            </Container>
-        </Box>
-        </>
-    );
+  return (
+    <Box sx={{flex: '1', textAlign: 'center',padding:'0', flexDirection:'column' }} >
+      <LandingOne /> 
+      <LandingAbout />
+      <OurDoctors />
+      <Services />
+      <Footer />
+    </Box>
+  );
 }
