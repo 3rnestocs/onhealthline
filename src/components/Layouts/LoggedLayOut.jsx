@@ -20,7 +20,7 @@ const StyledBox = styled(Box)({
 const LoggedLayOut = ({ children }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
-      <LoggedHeader />
+      <LoggedHeader type={'logged'} />
 
       {/* Contenido de la página */}
       <main style={{ flex: '1', textAlign: 'center',}}>

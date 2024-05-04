@@ -15,7 +15,7 @@ const OButton = ({
       type="submit"
       size="large"
       variant="contained"
-      sx={{ mt: 2, mb: 2, bgcolor: bg, color: color, width: fullWidth ? '100%' : 'auto' }}
+      sx={{ bgcolor: bg, color: color, width: fullWidth ? '100%' : 'auto' }}
       onClick={onClick}
       startIcon={icon}
     >

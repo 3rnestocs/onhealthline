@@ -1,11 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
-import { AppBar, Typography, Box, IconButton } from '@mui/material';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import { AppBar, Typography, Box, IconButton, Button } from '@mui/material';
+// import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { styled } from '@mui/system';
 import { Link } from 'react-router-dom'
 import { getUserName } from '@/utils/localStorageHelper';
+import HomeIcon from '@mui/icons-material/Home';
+import OButton from './OButton';
 
 const StyledAppBar = styled(AppBar)({
   display: 'flex',
@@ -45,7 +47,7 @@ const StyledIconButton = styled(IconButton)({
   },
 });
 
-const LoggedHeader = () => {
+const LoggedHeader = ({ onMenuClick, onLoginClick, type }) => {
   return (
     <StyledAppBar position='sticky'>
       <StyledBox className='logo'>
@@ -56,20 +58,34 @@ const LoggedHeader = () => {
       </StyledBox>
 
       <StyledBox className='options'>
+        {type == "access" && (
+          <IconButton
+            edge="start"
+            onClick={onMenuClick}
+            sx={{ marginLeft: '10px', marginRight: '0px' }}
+          >
+            <HomeIcon sx={{ fontSize: 40, color: "#10587e" }} />
+          </IconButton>
+        )}
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', flexGrow: 0.80 }}>
           <StyledTypography variant='h5' sx={{ fontWeight: 'bold', padding: '6px 20px' }}>Telemedicina de confianza</StyledTypography>
         </Box>
-
-        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', flexGrow: 0.15 }}>
           {/* <StyledIconButton>
-            <Link to='/'> <NotificationsIcon sx={{ color: '#2373a0' }} /> </Link>
-          </StyledIconButton> */}
+              <Link to='/'> <NotificationsIcon sx={{ color: '#2373a0' }} /> </Link>
+            </StyledIconButton> */}
+          {type == "home" && (
+              <OButton onClick={onLoginClick} title={'Iniciar sesion'} />
+          )}
 
-          <StyledIconButton>
-            <Link to='/myProfile'> <AccountCircleIcon sx={{ color: '#2373a0' }} /> </Link>
-          </StyledIconButton>
-          <Link to='/myProfile' style={{ textDecoration: 'none' }}> <StyledTypography variant='h6' >{getUserName()}</StyledTypography> </Link>
-
+          {type == "logged" && (
+            <>
+              <StyledIconButton>
+                <Link to='/myProfile'> <AccountCircleIcon sx={{ color: '#2373a0' }} /> </Link>
+              </StyledIconButton>
+              <Link to='/myProfile' style={{ textDecoration: 'none' }}> <StyledTypography variant='h6' >{getUserName()}</StyledTypography> </Link>
+            </>
+          )}
         </Box>
       </StyledBox>
     </StyledAppBar>
