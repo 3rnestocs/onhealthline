@@ -57,7 +57,7 @@ const StyledButton = styled(Button)({
 const DoctorProfile = ({ doctorData, onReturn, onScheduleAppointment }) => {
     if (!doctorData) return null;
 
-    const { cedula, nombre, rol, descripcion } = doctorData;
+    const { cedula, nombre, especialidad, descripcion } = doctorData;
 
     const handleScheduleClick = () => {
         onScheduleAppointment(); // Llama a la función proporcionada por el padre
@@ -74,7 +74,7 @@ const DoctorProfile = ({ doctorData, onReturn, onScheduleAppointment }) => {
                     <Divider sx={{ borderBottom: '4px solid #000000', opacity: '0.5' }} />
 
                     <StyledTypography align='left' variant='h5'>
-                        Especialidad: {rol}
+                        Especialidad: {especialidad}
                     </StyledTypography>
 
                     <StyledTypography align='justify'>
