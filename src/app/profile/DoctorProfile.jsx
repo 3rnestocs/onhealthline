@@ -57,10 +57,10 @@ const StyledButton = styled(Button)({
 const DoctorProfile = ({ doctorData, onReturn, onScheduleAppointment }) => {
     if (!doctorData) return null;
 
-    const { id, nombre, rol, descripcion } = doctorData;
+    const { cedula, nombre, rol, descripcion } = doctorData;
 
     const handleScheduleClick = () => {
-        onScheduleAppointment(doctorData);
+        onScheduleAppointment(); // Llama a la función proporcionada por el padre
     };
 
     return (
