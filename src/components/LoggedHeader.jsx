@@ -51,8 +51,12 @@ const LoggedHeader = ({ onMenuClick, onLoginClick, type }) => {
   return (
     <StyledAppBar position='sticky'>
       <StyledBox className='logo'>
-        <Link to='/'>
-          <Image src={'/assets/logo_test.svg'} width={350} height={60} />
+        <Link to='/home'>
+          <Image
+            alt='logo'
+            src={'/assets/logo_test.svg'}
+            width={350}
+            height={60} />
         </Link>
 
       </StyledBox>
@@ -75,7 +79,7 @@ const LoggedHeader = ({ onMenuClick, onLoginClick, type }) => {
               <Link to='/'> <NotificationsIcon sx={{ color: '#2373a0' }} /> </Link>
             </StyledIconButton> */}
           {type == "home" && (
-              <OButton onClick={onLoginClick} title={'Iniciar sesion'} />
+            <OButton onClick={onLoginClick} title={'Iniciar sesion'} />
           )}
 
           {type == "logged" && (

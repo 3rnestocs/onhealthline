@@ -4,8 +4,8 @@ import { Box, Typography, styled, Tabs, Tab } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import SickIcon from '@mui/icons-material/Sick';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import Login from './login/login';
-import Register from './register/register';
+import Login from './login/Login';
+import Register from './register/Register';
 
 function Copyright(props) {
   return (

@@ -4,27 +4,22 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import LoggedHeader from '@/components/LoggedHeader';
-import Home from './home';
+import Home from './home/Home';
 import Access from './access/access';
-import Register from './access/register/register';
+import Register from './access/register/Register';
 import LoggedLayOut from '@/components/Layouts/LoggedLayOut';
-import Specialization from './Schedule/Specialization';
-import MySchedule from './Schedule/MySchedule';
+import Specialization from './specialists/Specialization';
+import MySchedule from './schedule/MySchedule';
 import AuthProvider from '@/api/authProvider';
-// import PrivateRoute from '@/components/PrivateRoute';
-// import { Provider } from 'react-redux';
-// import { store } from '@/redux/store';
-import MyProfile from './Schedule/MyProfile';
+import MyProfile from './profile/MyProfile';
 
 function App() {
   return (
-    // <Provider store={store}>
     <BrowserRouter>
       <AuthProvider>
         <Content />
       </AuthProvider>
     </BrowserRouter>
-    // </Provider>
   );
 }
 
@@ -50,7 +45,6 @@ function Content() {
   }, []);
 
   useEffect(() => {
-    // Reset showLoginButton to true when navigating back to the home page
     if (location.pathname === '/') {
       setShowLoginButton(true);
     }

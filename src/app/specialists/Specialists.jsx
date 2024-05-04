@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { List, ListItem, ListItemText, Typography, Box, Divider } from '@mui/material';
 import { styled } from '@mui/system';
-import DoctorProfile from './DoctorProfile';
+import DoctorProfile from '../profile/DoctorProfile';
 
 const StyledTypography = styled(Typography)({
     color: '#2373a0',

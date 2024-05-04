@@ -4,7 +4,7 @@ import { Box, Grid, Button, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import OTextField from '@/components/OTextField';
 import Specialists from './Specialists';
-import DoctorProfile from './DoctorProfile';
+import DoctorProfile from '../profile/DoctorProfile';
 
 const StyledGrid = styled(Grid)({
     display: 'flex',

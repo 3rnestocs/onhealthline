@@ -63,7 +63,7 @@ const LoggedMenu = () => {
 
 
                 <ListItem>
-                    <Link to='/'>
+                    <Link to='/home'>
                         <Image
                             alt='menu profile'
                             src={"/assets/ICONMenuProfile.PNG"}
@@ -77,7 +77,7 @@ const LoggedMenu = () => {
                 </ListItem>
 
                 <ListItem>
-                    <Link to='/'>
+                    <Link to='/home'>
                         <StyledIconButton>
                             <LogoutIcon />
                         </StyledIconButton>
