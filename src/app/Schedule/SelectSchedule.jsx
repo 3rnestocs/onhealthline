@@ -4,6 +4,8 @@ import { useTheme } from '@mui/material/styles';
 import { Typography, Divider, MenuItem, Select, Grid, Chip, OutlinedInput, InputLabel, FormControl, Box } from '@mui/material';
 import OTextField from '../../components/OTextField';
 import OButton from '../../components/OButton';
+import { API_URL_BACKEND } from '../../api/authProvider';
+import { getUser } from '../../utils/localStorageHelper';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -37,6 +39,7 @@ const StyledTypography = styled(Typography)({
 });
 
 const SelectSchedule = () => {
+    const usuario = getUser();
     const theme = useTheme();
     const [days, setAvailableDays] = useState([]);
     const [startTime, setStartTime] = useState('');
@@ -46,26 +49,45 @@ const SelectSchedule = () => {
         '7AM', '8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM'
     ]
     const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        days: [],
-        start_time: '',
-        end_time: ''
+        titulo: '',
+        descripcion: '',
+        dias_semana: [],
+        hora_inicio: '',
+        hora_fin: '',
+        doctor: usuario.id
     });
     const handleFormChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
 
+    const convertTo24Hour = (time) => {
+        let [hours, minutes, period] = time.match(/^(\d{1,2})(?::(\d{2}))?\s*([ap]m)?$/i).slice(1, 4);
+        hours = parseInt(hours, 10);
+        if (period == 'AM' && hours === 12) {
+            hours = 0; // Handle 12AM as 0
+        } else if (period == 'PM' && hours < 12) {
+            hours += 12; // Add 12 hours for PM times except 12PM
+        }
+        if (hours < 10) hours = '0' + hours; // Add leading zero if single digit
+        if (minutes == undefined) minutes = '00'; // Default to '00' if not provided
+        if (minutes.length == 1) minutes = '0' + minutes; // Add leading zero if single digit
+        return `${hours}:${minutes}:00`;
+    };
+
     const handleStartTimeChange = (event) => {
-        setStartTime(event.target.value);
+        const selectedTime = event.target.value;
+        const formattedTime = convertTo24Hour(selectedTime);
+        setStartTime(selectedTime);
         setEndTime('');
-        setFormData({ ...formData, [event.target.name]: event.target.value });
+        setFormData({ ...formData, [event.target.name]: formattedTime });
     };
 
     const handleEndTimeChange = (event) => {
-        setEndTime(event.target.value);
-        setFormData({ ...formData, [event.target.name]: event.target.value });
+        const selectedTime = event.target.value;
+        const formattedTime = convertTo24Hour(selectedTime);
+        setEndTime(selectedTime);
+        setFormData({ ...formData, [event.target.name]: formattedTime });
     };
 
     const handleDaySelection = (event) => {
@@ -94,6 +116,30 @@ const SelectSchedule = () => {
         if (hasError === true) {
             return;
         }
+
+        try {
+            const response = await fetch(`${API_URL_BACKEND}/medico/horario/crear/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.message}`);
+            }
+
+            const res = await response.json();
+
+            if (res.titulo == formData.titulo) {
+                console.log("response success:", res);
+            } else {
+                throw new Error("Invalid response format");
+            }
+        } catch (err) {
+            throw new Error(err);
+        }
     };
 
     return (
@@ -114,7 +160,7 @@ const SelectSchedule = () => {
                             topLabel="Título de la consulta"
                             placeholder="Describe brevemente el motivo de la consulta"
                             inputType="text"
-                            name="title"
+                            name="titulo"
                             required
                             fullWidth
                             onChange={handleFormChange}
@@ -127,7 +173,7 @@ const SelectSchedule = () => {
                                 required
                                 multiple
                                 fullWidth
-                                name='days'
+                                name='dias_semana'
                                 value={days}
                                 onChange={handleDaySelection}
                                 input={<OutlinedInput label="Seleccionar días de consulta" />}
@@ -166,7 +212,7 @@ const SelectSchedule = () => {
                             topLabel="Descripción de la consulta"
                             placeholder="Describe como es tu consulta y que tipo de resultados das"
                             inputType="text"
-                            name="description"
+                            name="descripcion"
                             required
                             fullWidth
                             onChange={handleFormChange}
@@ -177,7 +223,7 @@ const SelectSchedule = () => {
                             required
                             topLabel="Hora de inicio"
                             select
-                            name='start_time'
+                            name='hora_inicio'
                             value={startTime}
                             onChange={handleStartTimeChange}
                             fullWidth
@@ -193,7 +239,7 @@ const SelectSchedule = () => {
                             topLabel="Hora de fin"
                             select
                             value={endTime}
-                            name='end_time'
+                            name='hora_fin'
                             onChange={handleEndTimeChange}
                             fullWidth
                         >
