@@ -4,7 +4,9 @@ import { styled } from '@mui/system'
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom'
 import { getUser } from "../utils/localStorageHelper";
-
+import IConDate from '../assets/ICONMenuDate.png'
+import myDates from '../assets/ICONmeddate.png'
+import miPerfil from '../assets/ICONMenuProfile.png'
 const StyledIconButton = styled(IconButton)({
     color: '#ffffff',
     padding: '5px',
@@ -32,7 +34,7 @@ const LoggedMenu = () => {
                     <Link to='/schedules'>
                         <img
                             alt='menu date'
-                            src={"../../public/assets/ICONMenuDate.PNG"}
+                            src={IConDate}
                             width={50} height={50}
                         />
                     </Link>
@@ -48,7 +50,7 @@ const LoggedMenu = () => {
                     <Link to='/myschedules'>
                         <img
                             alt='medical date'
-                            src={"../../public/assets/ICONmeddate.PNG"}
+                            src={myDates}
                             width={50} height={50}
                         />
 
@@ -67,7 +69,7 @@ const LoggedMenu = () => {
                     <Link to='/myProfile'>
                         <img
                             alt='profile'
-                            src={"../../public/assets/ICONMenuProfile.PNG"}
+                            src={miPerfil}
                             width={50} height={50}
                         />
                     </Link>

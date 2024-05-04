@@ -1,6 +1,11 @@
 import React from 'react';
 import { Container, Typography, Box,Grid } from '@mui/material';
 import { styled } from '@mui/system';
+import service1 from '../../assets/service1.png'
+import service2 from '../../assets/service2.png'
+import service3 from '../../assets/service3.png'
+import service4 from '../../assets/service4.png'
+
 
 const ContainerContent = styled(Box)({
   position: 'relative',
@@ -48,25 +53,25 @@ const StyledGrid = styled(Grid)({
 const Servicios = [
     { 
         id: 1, 
-        profile:'../../../public/assets/service1.png',
+        profile:service1,
         nombre: 'Consultas virtuales', 
         descripcion: 'Nueva via de comunicacion entre paciente y doctor mediante videollamadas'
     },
     { 
         id: 2, 
-        profile:'../../../public/assets/service2.png',
+        profile:service2,
         nombre: 'Gestionar pruebas complementarias', 
         descripcion: 'Subir y visualizar informacion medica como analisis, imagenes fotos etc'
     },
     { 
         id: 3, 
-        profile:'../../../public/assets/service3.png',
+        profile:service3,
         nombre: 'Agendas de Citas', 
         descripcion: 'Configurar y reservar citas desde donde quieras'
     },
     { 
         id: 4, 
-        profile:'../../../public/assets/service4.png',
+        profile:service4,
         nombre: 'Generar Recipe Medico', 
         descripcion: 'Recibe ordenes de prescripcion y tratamiento de medicamentos'
     },

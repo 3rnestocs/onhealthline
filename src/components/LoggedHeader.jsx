@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { getUserName } from '../utils/localStorageHelper';
 import HomeIcon from '@mui/icons-material/Home';
 import OButton from './OButton';
+import Logo from '../assets/logo_test.svg'
 
 const StyledAppBar = styled(AppBar)({
   display: 'flex',
@@ -53,7 +54,7 @@ const LoggedHeader = ({ onMenuClick, onLoginClick, type }) => {
         <Link to='/'>
           <img
             alt='logo'
-            src={'/assets/logo_test.svg'}
+            src={Logo}
             width={350}
             height={60} />
         </Link>

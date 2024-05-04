@@ -1,6 +1,9 @@
 import React from 'react';
 import { Container, Typography, Box } from '@mui/material';
 import { styled } from '@mui/system';
+import dr1 from '../../assets/dr1.png'
+import dr2 from '../../assets/dr2.png'
+import dr3 from '../../assets/d3.png'
 
 const ContainerContent = styled(Box)({
   position: 'relative',
@@ -53,21 +56,21 @@ const StyledTypography  =styled(Typography)({
 const Doctores = [
     { 
         id: 1, 
-        profile:'../../../public/assets/dr2.png',
+        profile:dr2,
         nombre: 'Dr. Gregory House', 
         rol: 'Medicina Interna',
         descripcion: 'Dedicada a prevenir, diagnosticar y tratar enfermedades comunes en pacientes de todas las edades. Su enfoque está en la atención integral y la derivación adecuada a especialistas cuando sea necesario. '
     },
     { 
         id: 2, 
-        profile:'../../../public/assets/dr1.png',
+        profile:dr1,
         nombre: 'Dr. Shaun Murphy', 
         rol: 'Medicina Interna',
         descripcion: 'Dedicado a prevenir, diagnosticar y tratar enfermedades comunes en pacientes de todas las edades. Su enfoque está en la atención integral y la derivación adecuada a especialistas cuando sea necesario.'
     },
     { 
         id: 3, 
-        profile:'../../../public/assets/d3.png',
+        profile:dr3,
         nombre: 'Dr Ethan Choi', 
         rol: 'Pediatria',
         descripcion: 'Dedicada a prevenir, diagnosticar y tratar enfermedades comunes en pacientes pediátricos. Su enfoque está en la atención integral y la derivación adecuada a especialistas cuando sea necesario. '

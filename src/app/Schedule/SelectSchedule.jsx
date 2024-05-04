@@ -6,6 +6,7 @@ import OTextField from '../../components/OTextField';
 import OButton from '../../components/OButton';
 import { API_URL_BACKEND } from '../../api/authProvider';
 import { getUser } from '../../utils/localStorageHelper';
+import {useNavigate} from 'react-router-dom';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -74,7 +75,7 @@ const SelectSchedule = () => {
         if (minutes.length == 1) minutes = '0' + minutes; // Add leading zero if single digit
         return `${hours}:${minutes}:00`;
     };
-
+    const navigate = useNavigate();
     const handleStartTimeChange = (event) => {
         const selectedTime = event.target.value;
         const formattedTime = convertTo24Hour(selectedTime);
@@ -134,12 +135,14 @@ const SelectSchedule = () => {
 
             if (res.titulo == formData.titulo) {
                 console.log("response success:", res);
+                navigate('/myProfile')
             } else {
                 throw new Error("Invalid response format");
             }
         } catch (err) {
             throw new Error(err);
         }
+
     };
 
     return (

@@ -7,6 +7,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import StarIcon from '@mui/icons-material/Star';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import footerbg from '../../assets/footer.png'
 
 const ContainerContent = styled(Box)({
   position: 'relative',
@@ -52,7 +53,7 @@ export default function Footer() {
   return (
     <Box sx={{ flex: '1', textAlign: 'center', padding: '0', flexDirection: 'column' }}>
       <ContainerContent>
-        <ImageBackground src="../../../public/assets/footer.png" alt="Background Image" />
+        <ImageBackground src={footerbg} alt="Background Image" />
         <BottomBox>
           <Divider sx={{ borderBottom: '1px solid #ccc' }} />
           <Grid container spacing={0}>

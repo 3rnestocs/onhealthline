@@ -5,6 +5,7 @@ import { Box, Typography, Button, MenuItem } from '@mui/material'
 import { styled } from '@mui/system';
 import { useAuth } from '../../api/authProvider';
 import OTextField from '../../components/OTextField';
+import {useNavigate} from 'react-router-dom';
 
 const StyledTypography = styled(Typography)({
     color: '#2373a0',
@@ -84,7 +85,7 @@ const Schedule = ({ doctorData, onReturn }) => {
     const [schedule, setSchedule] = useState(null);
     const [availableHours, setAvailableHours] = useState([]);
     const [selectedHour, setSelectedHour] = useState([]);
-
+    const navigate = useNavigate()
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -154,6 +155,7 @@ const Schedule = ({ doctorData, onReturn }) => {
         }
         console.log('data:', formData)
         agendarCita(formData);
+        navigate('/myschedules')
     }
 
     const convertTo24Hour = (time) => {
@@ -205,7 +207,7 @@ const Schedule = ({ doctorData, onReturn }) => {
                 <StyledBox className='ScheduleMain_Box'>
                     <StyledBox className='ScheduleButton_Box'>
                         <StyledTypography variant='h6'>
-                            Horario de {nombre} - {cedula}
+                            Horario disponible de {nombre} 
                         </StyledTypography>
                         <OTextField
                             required

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Typography, Box } from '@mui/material';
 import { styled } from '@mui/system';
-
+import homeBg from '../../assets/homelanding.png'
 const ContainerContent = styled(Box)({
   position: 'relative',
   width: '100%',
@@ -31,7 +31,7 @@ export default function LadingOne() {
   return (
     <Box sx={{flex: '1', textAlign: 'center',padding:'0', flexDirection:'column' }} >
       <ContainerContent>
-        <ImageBackground src="../../../public/assets/homelanding.png" alt="Background Image" />
+        <ImageBackground src={homeBg} />
         <OverlayText variant="h3">Consulta En linea</OverlayText>
       </ContainerContent>
     </Box>

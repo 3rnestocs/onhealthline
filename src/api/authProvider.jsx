@@ -144,8 +144,35 @@ const AuthProvider = ({ children }) => {
         }
     };
 
+    const listEvents = async () => {
+        try {
+            const response = await fetch(`${API_URL_BACKEND}/citas/list-events/`, {
+                method: "GET",
+                   headers: {
+                    "Authorization": `Token ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json",
+                },
+            });
+    
+            if (response.status === 401) {
+                // Manejar el caso de no autorizado (Unauthorized)
+                throw new Error("Unauthorized: Token is invalid or expired.");
+            }
+    
+            if (!response.ok) {
+                // Manejar otros errores de HTTP
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+    
+            const events = await response.json();
+            return events;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ token, user, loginAction, registerAction, logOut, listAllDoctors, requestDoctorSchedule, agendarCita }}>
+        <AuthContext.Provider value={{ token, user, loginAction, registerAction, logOut, listAllDoctors, requestDoctorSchedule, agendarCita, listEvents }}>
             {children}
         </AuthContext.Provider>
     );

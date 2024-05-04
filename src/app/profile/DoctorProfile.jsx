@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, Divider, Button } from '@mui/material'
 import { styled } from '@mui/system';
-
+import dProfile from '../../assets/defaultProfile.png'
 const ContainerContent = styled(Box)({
     display: 'flex',
     justifyContent: 'center',
@@ -84,7 +84,7 @@ const DoctorProfile = ({ doctorData, onReturn, onScheduleAppointment }) => {
 
                 <StyledBox className="Image_Box">
                     <img
-                        src={'/assets/defaultProfile.png'}
+                        src={dProfile}
                         alt='Doctor Profile Picture'
                         width={400}
                         height={400}

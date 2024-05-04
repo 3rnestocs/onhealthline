@@ -5,6 +5,12 @@ import OTextField from '../../components/OTextField';
 import Specialists from './Specialists';
 import DoctorProfile from '../profile/DoctorProfile';
 import Schedule from '../Schedule/Schedule'
+import Dermatologia from '../../assets/ICONDermatologia.png'
+import Geriatria from '../../assets/ICONGeriatria.png'
+import Pediatria from '../../assets/ICONPediatria.png'
+import medGeneral from '../../assets/ICONMedGeneral.png'
+import medInterna from '../../assets/ICONMedInterna.png'
+import Psiquiatria from '../../assets/ICONPsiquiatria.png'
 
 const StyledGrid = styled(Grid)({
     display: 'flex',
@@ -95,7 +101,7 @@ const Specialization = () => {
                          <StyledTypography>Dermatologia</StyledTypography>
                          <img
                              alt='Dermatologia'
-                             src={'/assets/ICONDermatologia.png'}
+                             src={Dermatologia }
                              width={50}
                              height={50}
                          />
@@ -106,7 +112,7 @@ const Specialization = () => {
                          <StyledTypography>Geriatria</StyledTypography>
                          <img
                              alt='Geriatria'
-                             src={'/assets/ICONGeriatria.png'}
+                             src={Geriatria}
                              width={50}
                              height={50}
                          />
@@ -118,7 +124,7 @@ const Specialization = () => {
                          <StyledTypography>Medicina General</StyledTypography>
                          <img
                              alt='Medicina General'
-                             src={'/assets/ICONMedGeneral.png'}
+                             src={medGeneral}
                              width={50}
                              height={50}
                          />
@@ -130,7 +136,7 @@ const Specialization = () => {
                          <StyledTypography>Medicina Interna</StyledTypography>
                          <img
                              alt='Medicina Interna'
-                             src={'/assets/ICONMedInterna.png'}
+                             src={medInterna}
                              width={50}
                              height={50}
                          />
@@ -142,7 +148,7 @@ const Specialization = () => {
                          <StyledTypography>Pediatria</StyledTypography>
                          <img
                              alt='Pediatria'
-                             src={'/assets/ICONPediatria.png'}
+                             src={Pediatria}
                              width={50}
                              height={50}
                          />
@@ -154,7 +160,7 @@ const Specialization = () => {
                          <StyledTypography>Psiquiatria</StyledTypography>
                          <img
                              alt='Psiquiatria'
-                             src={'/assets/ICONPsiquiatria.png'}
+                             src={Psiquiatria}
                              width={50}
                              height={50}
                          />

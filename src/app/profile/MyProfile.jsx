@@ -4,6 +4,7 @@ import { styled } from '@mui/system';
 import OTextField from '../../components/OTextField';
 import { getUser } from '../../utils/localStorageHelper';
 import { useNavigate } from 'react-router-dom';
+import profilePhoto from '../../assets/defaultProfile.png'
 
 const ContainerContent = styled(Box)({
     display: 'flex',
@@ -141,7 +142,7 @@ const MyProfile = () => {
                 <StyledBox className='ProfileDataBox'>
                     <StyledBox className='ProfileImage'>
                         <img
-                            src={'../../public/assets/defaultProfile.png'}
+                            src={profilePhoto}
                             alt="Profile Image"
                             width={150}
                             height={150}
