@@ -134,6 +134,7 @@ const MyProfile = () => {
                     <StyledBox className='ProfileImage'>
                         <Image
                             src={'/assets/defaultProfile.png'}
+                            alt="Profile Image"
                             width={150}
                             height={150}
                             className="rounded-image"

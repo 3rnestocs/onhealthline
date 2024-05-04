@@ -31,6 +31,7 @@ const LoggedMenu = () => {
                 <ListItem>
                     <Link to='/schedules'>
                         <Image
+                            alt='menu date'
                             src={"/assets/ICONMenuDate.PNG"}
                             width={50} height={50}
                         />
@@ -45,6 +46,7 @@ const LoggedMenu = () => {
 
                     <Link to='/myschedules'>
                         <Image
+                            alt='medical date'
                             src={"/assets/ICONmeddate.PNG"}
                             width={50} height={50}
                         />
@@ -63,6 +65,7 @@ const LoggedMenu = () => {
                 <ListItem>
                     <Link to='/'>
                         <Image
+                            alt='menu profile'
                             src={"/assets/ICONMenuProfile.PNG"}
                             width={50} height={50}
                         />

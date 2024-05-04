@@ -82,74 +82,80 @@ const Specialization = () => {
                 </StyledGrid>
             </Box>
             {(isSearching || selectedDoctor) ? null : (
-                 <Grid container spacing={6} sx={{ marginTop: '3vh' }}>
-                 <StyledGrid item xs={6} md={6}>
-                     <SyledButton onClick={() => handleSearch('Dermatologia')}>
-                         <StyledTypography>Dermatologia</StyledTypography>
-                         <Image
-                             src={'/assets/ICONDermatologia.png'}
-                             width={50}
-                             height={50}
-                         />
-                     </SyledButton>
-                 </StyledGrid>
-                 <StyledGrid item xs={6} md={6}>
-                     <SyledButton onClick={() => handleSearch('Geriatria')}>
-                         <StyledTypography>Geriatria</StyledTypography>
-                         <Image
-                             src={'/assets/ICONGeriatria.png'}
-                             width={50}
-                             height={50}
-                         />
-                     </SyledButton>
-                 </StyledGrid>
-  
-                 <StyledGrid item xs={6} md={6}>
-                     <SyledButton onClick={() => handleSearch('Medicina General')}>
-                         <StyledTypography>Medicina General</StyledTypography>
-                         <Image
-                             src={'/assets/ICONMedGeneral.png'}
-                             width={50}
-                             height={50}
-                         />
-                     </SyledButton>
-                 </StyledGrid>
-  
-                 <StyledGrid item xs={6} md={6}>
-                     <SyledButton onClick={() => handleSearch('Medicina Interna')}>
-                         <StyledTypography>Medicina Interna</StyledTypography>
-                         <Image
-                             src={'/assets/ICONMedInterna.png'}
-                             width={50}
-                             height={50}
-                         />
-                     </SyledButton>
-                 </StyledGrid>
-  
-                 <StyledGrid item xs={6} md={6}>
-                     <SyledButton onClick={() => handleSearch('Pediatria')}>
-                         <StyledTypography>Pediatria</StyledTypography>
-                         <Image
-                             src={'/assets/ICONPediatria.png'}
-                             width={50}
-                             height={50}
-                         />
-                     </SyledButton>
-                 </StyledGrid>
-  
-                 <StyledGrid item xs={6} md={6}>
-                     <SyledButton onClick={() => handleSearch('Psiquiatria')}>
-                         <StyledTypography>Psiquiatria</StyledTypography>
-                         <Image
-                             src={'/assets/ICONPsiquiatria.png'}
-                             width={50}
-                             height={50}
-                         />
-                     </SyledButton>
-                 </StyledGrid>
-                 
-                 
-             </Grid>
+                <Grid container spacing={6} sx={{ marginTop: '3vh' }}>
+                    <StyledGrid item xs={6} md={6}>
+                        <SyledButton onClick={() => handleSearch('Dermatologia')}>
+                            <StyledTypography>Dermatologia</StyledTypography>
+                            <Image
+                                alt='Dermatologia'
+                                src={'/assets/ICONDermatologia.png'}
+                                width={50}
+                                height={50}
+                            />
+                        </SyledButton>
+                    </StyledGrid>
+                    <StyledGrid item xs={6} md={6}>
+                        <SyledButton onClick={() => handleSearch('Geriatria')}>
+                            <StyledTypography>Geriatria</StyledTypography>
+                            <Image
+                                alt='Geriatria'
+                                src={'/assets/ICONGeriatria.png'}
+                                width={50}
+                                height={50}
+                            />
+                        </SyledButton>
+                    </StyledGrid>
+
+                    <StyledGrid item xs={6} md={6}>
+                        <SyledButton onClick={() => handleSearch('Medicina General')}>
+                            <StyledTypography>Medicina General</StyledTypography>
+                            <Image
+                                alt='Medicina General'
+                                src={'/assets/ICONMedGeneral.png'}
+                                width={50}
+                                height={50}
+                            />
+                        </SyledButton>
+                    </StyledGrid>
+
+                    <StyledGrid item xs={6} md={6}>
+                        <SyledButton onClick={() => handleSearch('Medicina Interna')}>
+                            <StyledTypography>Medicina Interna</StyledTypography>
+                            <Image
+                                alt='Medicina Interna'
+                                src={'/assets/ICONMedInterna.png'}
+                                width={50}
+                                height={50}
+                            />
+                        </SyledButton>
+                    </StyledGrid>
+
+                    <StyledGrid item xs={6} md={6}>
+                        <SyledButton onClick={() => handleSearch('Pediatria')}>
+                            <StyledTypography>Pediatria</StyledTypography>
+                            <Image
+                                alt='Pediatria'
+                                src={'/assets/ICONPediatria.png'}
+                                width={50}
+                                height={50}
+                            />
+                        </SyledButton>
+                    </StyledGrid>
+
+                    <StyledGrid item xs={6} md={6}>
+                        <SyledButton onClick={() => handleSearch('Psiquiatria')}>
+                            <StyledTypography>Psiquiatria</StyledTypography>
+                            <Image
+                                alt='Psiquiatria'
+                                src={'/assets/ICONPsiquiatria.png'}
+                                width={50}
+                                height={50}
+                            />
+                        </SyledButton>
+                    </StyledGrid>
+
+
+                </Grid>
             )}
             {isSearching && (
                 <Specialists searchValue={searchValue} onDoctorSelect={handleDoctorSelect} />

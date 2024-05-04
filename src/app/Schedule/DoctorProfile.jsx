@@ -83,6 +83,7 @@ const DoctorProfile = ({ doctorData, onReturn }) => {
                 <StyledBox className="Image_Box">
                     <Image
                         src={'/assets/defaultProfile.png'}
+                        alt='Doctor Profile Picture'
                         width={400}
                         height={400}
                         className="rounded-image"
