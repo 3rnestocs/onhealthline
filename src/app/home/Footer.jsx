@@ -6,6 +6,7 @@ import XIcon from '@mui/icons-material/X';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import StarIcon from '@mui/icons-material/Star';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const ContainerContent = styled(Box)({
   position: 'relative',
@@ -17,6 +18,7 @@ const ImageBackground = styled('img')({
   width: '100%',
   height: '100%',
   objectFit: 'cover',
+  opacity:'0.5'
 });
 
 const OverlayText = styled(Typography)({
@@ -57,32 +59,30 @@ export default function Footer() {
             <Grid item xs={4}>
                 <Typography variant="h3">Contactanos</Typography>
               <StyledBox>
-              <Typography variant="h3"><EmailIcon style={{fontSize:'5vh'}}/></Typography>
-              <Typography variant="h3"><PhoneIcon style={{fontSize:'5vh'}}/></Typography>
-         
+                <a href="mailto:info@OnHealthLine.com.ve" style={{ textDecoration: 'none',color:'#ffffff' }}>
+                  <Typography variant="h3"><EmailIcon style={{ fontSize: '5vh' }} /></Typography>
+                </a>
+                <Typography variant="h3"><PhoneIcon style={{ fontSize: '5vh' }} /></Typography>
               </StyledBox>
-              
             </Grid>
             <Grid item xs={4}>
-              
               <Typography variant="h3">Redes Sociales</Typography>
               <StyledBox>
-              <Typography variant="h3"><FacebookIcon style={{fontSize:'5vh'}}/></Typography>
-              <Typography variant="h3"><XIcon style={{fontSize:'5vh'}}/></Typography>
-         
+                <a href="https://www.instagram.com/onhealthline9/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color:'#ffffff' }}>
+                  <Typography variant="h3"><InstagramIcon style={{ fontSize: '5vh' }} /></Typography>
+                </a>
+                <Typography variant="h3"><FacebookIcon style={{ fontSize: '5vh' }} /></Typography>
+                <Typography variant="h3"><XIcon style={{ fontSize: '5vh' }} /></Typography>
               </StyledBox>
             </Grid>
             <Grid item xs={4}>
-          
               <Typography variant="h3">Excelente</Typography>
               <StyledBox>
-              <Typography variant="h3"><StarIcon style={{fontSize:'5vh'}}/><StarIcon style={{fontSize:'5vh'}}/><StarIcon style={{fontSize:'5vh'}}/><StarIcon style={{fontSize:'5vh'}}/><StarIcon style={{fontSize:'5vh'}}/></Typography>
-    
-         
+                <Typography variant="h3"><StarIcon style={{ fontSize: '5vh' }} /><StarIcon style={{ fontSize: '5vh' }} /><StarIcon style={{ fontSize: '5vh' }} /><StarIcon style={{ fontSize: '5vh' }} /><StarIcon style={{ fontSize: '5vh' }} /></Typography>
               </StyledBox>
-            </Grid>
+            </Grid> 
           </Grid>
-          <Typography variant='h3' sx={{marginTop:'3vh'}}>Copyright © OnHealthLine </Typography>
+          <Typography variant='h3' sx={{ marginTop: '3vh' }}>Copyright © OnHealthLine </Typography>
         </BottomBox>
       </ContainerContent>
     </Box>

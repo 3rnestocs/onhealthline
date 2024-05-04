@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Box, Typography, Divider, Button } from '@mui/material'
 import { styled } from '@mui/system';
-import { Link } from 'react-router-dom'
 
 const ContainerContent = styled(Box)({
     display: 'flex',
@@ -55,10 +54,14 @@ const StyledButton = styled(Button)({
     },
 });
 
-const DoctorProfile = ({ doctorData, onReturn }) => {
+const DoctorProfile = ({ doctorData, onReturn, onScheduleAppointment }) => {
     if (!doctorData) return null;
 
-    const { nombre, rol, descripcion } = doctorData;
+    const { id, nombre, rol, descripcion } = doctorData;
+
+    const handleScheduleClick = () => {
+        onScheduleAppointment(doctorData);
+    };
 
     return (
         <ContainerContent>
@@ -71,7 +74,7 @@ const DoctorProfile = ({ doctorData, onReturn }) => {
                     <Divider sx={{ borderBottom: '4px solid #000000', opacity: '0.5' }} />
 
                     <StyledTypography align='left' variant='h5'>
-                        Especialidad:{rol}
+                        Especialidad: {rol}
                     </StyledTypography>
 
                     <StyledTypography align='justify'>
@@ -95,7 +98,7 @@ const DoctorProfile = ({ doctorData, onReturn }) => {
                     Volver
                 </StyledButton>
 
-                <StyledButton className='schedule'>
+                <StyledButton className='schedule' onClick={handleScheduleClick}>
                     Agendar tu Consulta
                 </StyledButton>
             </StyledBox>
