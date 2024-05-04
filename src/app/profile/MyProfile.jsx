@@ -20,6 +20,7 @@ const StyledButton = styled(Button)({
     borderRadius: '8px',
     minWidth: '300px',
     minHeight: '50px',
+    maxHeight: '50px',
     color: '#ffffff',
     backgroundColor: '#10587e',
     opacity: '1',
@@ -114,7 +115,7 @@ const MyProfile = () => {
     const toggleEditMode = () => {
         setEditMode(!editMode);
         setChangesMade(false);
-        console.log(usuario.user_type)
+        console.log(usuario)
     };
 
     const applyChanges = () => {
@@ -202,7 +203,7 @@ const MyProfile = () => {
                         </StyledGrid>
                         <StyledGrid item xs={6} md={6}>
                             <OTextField
-                                placeholder={usuario.phone}
+                                // placeholder={usuario.phone}
                                 topLabel="Telefono"
                                 width="100%"
                                 inputType="text"
@@ -215,22 +216,24 @@ const MyProfile = () => {
                                 defaultValue={usuario.phone}
                             />
                         </StyledGrid>
+                        {usuario.user_type === "PACIENTE" && (
+                            <StyledGrid item xs={6} md={6}>
+                                <OTextField
+                                    // placeholder={usuario.address}
+                                    topLabel="Direccion"
+                                    width="100%"
+                                    inputType="text"
+                                    name="address"
+                                    required
+                                    autoFocus
+                                    disabled={!editMode} // Aquí se deshabilita el campo si editMode es falso
+                                    defaultValue={usuario.address}
+                                />
+                            </StyledGrid>
+                        )}
                         <StyledGrid item xs={6} md={6}>
-                            <OTextField
-                                placeholder={usuario.address}
-                                topLabel="Direccion"
-                                width="100%"
-                                inputType="text"
-                                name="address"
-                                required
-                                id="Direccion"
-                                autoComplete="Direccion"
-                                autoFocus
-                                disabled={!editMode} // Aquí se deshabilita el campo si editMode es falso
-                                defaultValue={usuario.address}
-                            />
+                            <StyledButton disabled={!editMode} fullWidth>Aplicar Cambios</StyledButton>
                         </StyledGrid>
-                        <StyledButton disabled={!editMode}>Aplicar Cambios</StyledButton>
                     </Grid>
                 </StyledBox>
                 <Grid container display={'flex'} flexDirection={'row'}>
@@ -279,7 +282,24 @@ const MyProfile = () => {
                             <StyledButton sx={{ width: '100%', height: '30px' }} disabled={!passwordMatch || !passwordFieldsNotEmpty}>Cambiar Contraseña</StyledButton>
                         </Box>
                     </StyledBox>
-                    <StyledButton sx={{ height: '30px' }} onClick={handleSelectSchedule}>Agregar horarios</StyledButton>
+                    <Grid item xs sm={6} sx={{ display: 'flex', flexDirection: 'column' }}>
+                        {usuario.user_type === "MEDICO" && (
+                            <OTextField
+                                multiline
+                                rows={4}
+                                fullWidth
+                                topLabel="Descripcion medica"
+                                // placeholder="Escribe una breve descripcion sobre tus labores medicas aquí"
+                                inputType="text"
+                                name="descripcion"
+                                value={usuario.descripcion}
+                                // onChange={handleFormChange}
+                                disabled={!editMode}
+                                defaultValue={usuario.descripcion}
+                            />
+                        )}
+                        <StyledButton sx={{ height: '30px', mt: 5 }} onClick={handleSelectSchedule}>Agregar horarios</StyledButton>
+                    </Grid>
                 </Grid>
             </StyledBox>
         </ContainerContent>
