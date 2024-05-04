@@ -3,6 +3,7 @@ import { Box, Typography, Divider, Button, Grid } from '@mui/material'
 import { styled } from '@mui/system';
 import Image from 'next/image'
 import OTextField from '@/components/OTextField';
+import { getUser } from '@/utils/localStorageHelper';
 
 const ContainerContent = styled(Box)({
     display: 'flex',
@@ -77,7 +78,7 @@ const StyledBox = styled(Box)({
         flexGrow: '0.5',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        margin:'10px'
+        margin: '10px'
     }
 })
 
@@ -94,12 +95,8 @@ const StyledGrid = styled(Grid)({
     padding: '2vh'
 });
 
-const usuariosDeEjemplo = [
-    { id: 1, nombre: 'Dra. Meredith Grey', rol: 'Medicina Interna', dateBirth: '12-01-2001', email: 'meredithgrey12012001@gmail.com', phone: '+584140000001', address: 'Pais de las maravillas, calle matasanos' },
-];
-
 const MyProfile = () => {
-    const [usuario, setUsuario] = useState(usuariosDeEjemplo[0]);
+    const usuario = getUser();
     const [editMode, setEditMode] = useState(false);
     const [changesMade, setChangesMade] = useState(false);
     const [currentPassword, setCurrentPassword] = useState('');
@@ -132,7 +129,7 @@ const MyProfile = () => {
     return (
         <ContainerContent>
             <StyledBox className='MainProfileBox'>
-                <StyledTypography variant='h6' sx={{ fontStyle: 'italic', opacity: "0.7", textAlign: "left" }}>~Mi Perfil</StyledTypography>
+                <StyledTypography variant='h6' sx={{ opacity: "0.7", textAlign: "left" }}>Mi Perfil</StyledTypography>
                 <StyledBox className='ProfileDataBox'>
                     <StyledBox className='ProfileImage'>
                         <Image
@@ -146,16 +143,16 @@ const MyProfile = () => {
                         <StyledTypography variant='h6'>{usuario.nombre}</StyledTypography>
                         <Box>
                             <Divider sx={{ borderBottom: '0.1px solid #2373a0', opacity: '0.3' }} />
-                            <StyledTypography align='left' sx={{ fontSize: '20px', fontStyle: 'italic', opacity: "0.7" }}>Fecha de Nacimiento:</StyledTypography>
+                            <StyledTypography align='left' sx={{ fontSize: '20px', opacity: "0.7" }}>Fecha de Nacimiento:</StyledTypography>
                             <StyledTypography align='left' sx={{ fontSize: '18px' }}>{usuario.dateBirth}</StyledTypography>
                             <Divider sx={{ borderBottom: '0.1px solid #2373a0', opacity: '0.3' }} />
                             <StyledTypography align='left' sx={{ fontSize: '20px', fontStyle: 'italic' }}>Telefono:</StyledTypography>
                             <StyledTypography align='left' sx={{ fontSize: '18px' }}>{usuario.phone}</StyledTypography>
                             <Divider sx={{ borderBottom: '0.1px solid #2373a0', opacity: '0.3' }} />
-                            <StyledTypography align='left' sx={{ fontSize: '20px', fontStyle: 'italic', opacity: "0.7" }}>Correo</StyledTypography>
+                            <StyledTypography align='left' sx={{ fontSize: '20px', opacity: "0.7" }}>Correo</StyledTypography>
                             <StyledTypography align='left' sx={{ fontSize: '18px' }}>{usuario.email}</StyledTypography>
                             <Divider sx={{ borderBottom: '0.1px solid #2373a0', opacity: '0.3' }} />
-                            <StyledTypography align='left' sx={{ fontSize: '20px', fontStyle: 'italic', opacity: "0.7" }}>Dirección</StyledTypography>
+                            <StyledTypography align='left' sx={{ fontSize: '20px', opacity: "0.7" }}>Dirección</StyledTypography>
                             <StyledTypography align='left' sx={{ fontSize: '18px' }}>{usuario.address}</StyledTypography>
                             <StyledButton onClick={toggleEditMode}>Editar Perfil</StyledButton>
                         </Box>
@@ -163,8 +160,8 @@ const MyProfile = () => {
                 </StyledBox>
             </StyledBox>
             <StyledBox className='MainSettingsBox'>
-                <StyledTypography variant='h6' sx={{ fontStyle: 'italic', opacity: "0.7", textAlign: "left" }}>~Configuración</StyledTypography>
-                <StyledTypography variant='h7' sx={{ fontStyle: 'italic', opacity: "0.7", textAlign: "left" }}>~Datos</StyledTypography>
+                <StyledTypography variant='h6' sx={{ opacity: "0.7", textAlign: "left" }}>Configuración</StyledTypography>
+                <StyledTypography variant='h7' sx={{ opacity: "0.7", textAlign: "left" }}>Datos</StyledTypography>
                 <StyledBox className='SettingsData' editMode={editMode}>
                     <Grid container sx={{ marginTop: '1vh' }}>
                         <StyledGrid item xs={6} md={6}>
@@ -172,13 +169,13 @@ const MyProfile = () => {
                                 topLabel="Nombre"
                                 width="100%"
                                 inputType="text"
-                                name="Nombre"
+                                name="first_name"
                                 required
                                 id="Nombre"
                                 autoComplete="Nombre"
                                 autoFocus
                                 disabled={!editMode} // Aquí se deshabilita el campo si editMode es falso
-                                defaultValue={usuario.nombre}
+                                defaultValue={usuario.first_name}
                             />
                         </StyledGrid>
                         <StyledGrid item xs={6} md={6}>
@@ -186,13 +183,13 @@ const MyProfile = () => {
                                 topLabel="Apellido"
                                 width="100%"
                                 inputType="text"
-                                name="Apellido"
+                                name="last_name"
                                 required
                                 id="Apellido"
                                 autoComplete="Apellido"
                                 autoFocus
                                 disabled={!editMode} // Aquí se deshabilita el campo si editMode es falso
-                                defaultValue={usuario.apellido}
+                                defaultValue={usuario.last_name}
                             />
                         </StyledGrid>
                         <StyledGrid item xs={6} md={6}>
@@ -201,7 +198,7 @@ const MyProfile = () => {
                                 topLabel="Telefono"
                                 width="100%"
                                 inputType="text"
-                                name="Telefono"
+                                name="phone"
                                 required
                                 id="Telefono"
                                 autoComplete="Telefono"
@@ -216,7 +213,7 @@ const MyProfile = () => {
                                 topLabel="Direccion"
                                 width="100%"
                                 inputType="text"
-                                name="Direccion"
+                                name="address"
                                 required
                                 id="Direccion"
                                 autoComplete="Direccion"
@@ -228,7 +225,7 @@ const MyProfile = () => {
                         <StyledButton className='changeData' disabled={!editMode}>Aplicar Cambios</StyledButton>
                     </Grid>
                 </StyledBox>
-                <StyledTypography variant='h7' sx={{ fontStyle: 'italic', opacity: "0.7", textAlign: "left" }}>~Cambiar Contraseña</StyledTypography>
+                <StyledTypography variant='h7' sx={{ opacity: "0.7", textAlign: "left" }}>Cambiar Contraseña</StyledTypography>
                 <StyledBox className='SettingsPassword'>
                     <Box sx={{ margin: 'vh' }}>
                         <OTextField
@@ -259,7 +256,7 @@ const MyProfile = () => {
                             helperText={!passwordMatch && "Las contraseñas no coinciden"}
                         />
                     </Box>
-                    <Box sx={{display:'flex',flexDirection:'row'}}>
+                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                         <OTextField
                             placeholder='Repetir Nueva Contraseña'
                             topLabel="Repetir Nueva Contraseña"
@@ -274,9 +271,9 @@ const MyProfile = () => {
                             error={!passwordMatch}
                             helperText={!passwordMatch && "Las contraseñas no coinciden"}
                         />
-                        <StyledButton sx={{ width: '50%',height:'30px' }} disabled={!passwordMatch || !passwordFieldsNotEmpty}>Cambiar Contraseña</StyledButton>
+                        <StyledButton sx={{ width: '50%', height: '30px' }} disabled={!passwordMatch || !passwordFieldsNotEmpty}>Cambiar Contraseña</StyledButton>
                     </Box>
-                    
+
                 </StyledBox>
             </StyledBox>
         </ContainerContent>

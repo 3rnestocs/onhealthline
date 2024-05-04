@@ -50,26 +50,26 @@ const LoggedHeader = () => {
     <StyledAppBar position='sticky'>
       <StyledBox className='logo'>
         <Link to='/'>
-          <Image src={'/assets/Logo.png'} width={350} height={60} />
+          <Image src={'/assets/logo_test.svg'} width={350} height={60} />
         </Link>
 
       </StyledBox>
 
       <StyledBox className='options'>
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', flexGrow: 0.80 }}>
-          <StyledTypography variant='h5' sx={{ fontWeight: 'bold', padding: '6px 20px' }}>Citas Online</StyledTypography>
+          <StyledTypography variant='h5' sx={{ fontWeight: 'bold', padding: '6px 20px' }}>Telemedicina de confianza</StyledTypography>
         </Box>
 
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-          <StyledIconButton>
+          {/* <StyledIconButton>
             <Link to='/'> <NotificationsIcon sx={{ color: '#2373a0' }} /> </Link>
-          </StyledIconButton>
+          </StyledIconButton> */}
 
           <StyledIconButton>
             <Link to='/myProfile'> <AccountCircleIcon sx={{ color: '#2373a0' }} /> </Link>
           </StyledIconButton>
           <Link to='/myProfile' style={{ textDecoration: 'none' }}> <StyledTypography variant='h6' >{getUserName()}</StyledTypography> </Link>
-          
+
         </Box>
       </StyledBox>
     </StyledAppBar>

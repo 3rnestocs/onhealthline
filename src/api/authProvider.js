@@ -25,11 +25,11 @@ const AuthProvider = ({ children }) => {
             
             const res = await response.json();
             
-            if (res.Token && res.user) {
+            if (res.token && res.user) {
                 setUser(res.user);
-                setToken(res.Token);
+                setToken(res.token);
                 localStorage.setItem("user", JSON.stringify(res.user))
-                localStorage.setItem("token", res.Token);
+                localStorage.setItem("token", res.token);
                 console.log("user:", res.user);
                 navigate("/schedules");
             } else {
