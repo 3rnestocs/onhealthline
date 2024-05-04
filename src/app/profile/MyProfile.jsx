@@ -161,8 +161,12 @@ const MyProfile = () => {
                             <StyledTypography align='left' sx={{ fontSize: '20px', opacity: "0.7" }}>Correo</StyledTypography>
                             <StyledTypography align='left' sx={{ fontSize: '18px' }}>{usuario.email}</StyledTypography>
                             <Divider sx={{ borderBottom: '0.1px solid #2373a0', opacity: '0.3' }} />
-                            <StyledTypography align='left' sx={{ fontSize: '20px', opacity: "0.7" }}>Dirección</StyledTypography>
-                            <StyledTypography align='left' sx={{ fontSize: '18px' }}>{usuario.address}</StyledTypography>
+                            {usuario.user_type == 'PACIENTE' && (
+                                <>
+                                    <StyledTypography align='left' sx={{ fontSize: '20px', opacity: "0.7" }}>Dirección</StyledTypography>
+                                    <StyledTypography align='left' sx={{ fontSize: '18px' }}>{usuario.address}</StyledTypography>
+                                </>
+                            )}
                             <StyledButton onClick={toggleEditMode}>Editar Perfil</StyledButton>
                         </Box>
                     </StyledBox>
@@ -284,21 +288,23 @@ const MyProfile = () => {
                     </StyledBox>
                     <Grid item xs sm={6} sx={{ display: 'flex', flexDirection: 'column' }}>
                         {usuario.user_type === "MEDICO" && (
-                            <OTextField
-                                multiline
-                                rows={4}
-                                fullWidth
-                                topLabel="Descripcion medica"
-                                // placeholder="Escribe una breve descripcion sobre tus labores medicas aquí"
-                                inputType="text"
-                                name="descripcion"
-                                value={usuario.descripcion}
-                                // onChange={handleFormChange}
-                                disabled={!editMode}
-                                defaultValue={usuario.descripcion}
-                            />
+                            <>
+                                <OTextField
+                                    multiline
+                                    rows={4}
+                                    fullWidth
+                                    topLabel="Descripcion medica"
+                                    // placeholder="Escribe una breve descripcion sobre tus labores medicas aquí"
+                                    inputType="text"
+                                    name="descripcion"
+                                    value={usuario.descripcion}
+                                    // onChange={handleFormChange}
+                                    disabled={!editMode}
+                                    defaultValue={usuario.descripcion}
+                                />
+                                <StyledButton sx={{ height: '30px', mt: 5 }} onClick={handleSelectSchedule}>Agregar horarios</StyledButton>
+                            </>
                         )}
-                        <StyledButton sx={{ height: '30px', mt: 5 }} onClick={handleSelectSchedule}>Agregar horarios</StyledButton>
                     </Grid>
                 </Grid>
             </StyledBox>
