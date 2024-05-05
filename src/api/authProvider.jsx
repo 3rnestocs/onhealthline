@@ -22,9 +22,9 @@ const AuthProvider = ({ children }) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.Message}`);
             }
-            
+
             const res = await response.json();
-            
+
             if (res.token && res.user) {
                 setUser(res.user);
                 setToken(res.token);
@@ -40,7 +40,7 @@ const AuthProvider = ({ children }) => {
             throw new Error(err);
         }
     };
-    
+
     const registerAction = async (data) => {
         try {
             const response = await fetch(`${API_URL_BACKEND}/auth/register/`, {
@@ -50,13 +50,13 @@ const AuthProvider = ({ children }) => {
                 },
                 body: JSON.stringify(data),
             });
-            
+
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.Message}`);
             }
-            
+
             const res = await response.json();
-            
+
             console.log("request 2:", res);
             if (res.message) {
                 loginAction({ email: data.email, password: data.password });
@@ -78,19 +78,46 @@ const AuthProvider = ({ children }) => {
                 },
                 body: JSON.stringify(data),
             });
-            
+
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            
+
             const res = await response.json();
-            
+
             console.log("response:", res);
             // if (res.message) {
 
             // } else {
             //     throw new Error("Invalid response format");
             // }
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+
+    const actualizarPerfil = async (id, params) => {
+        try {
+            const response = await fetch(`${API_URL_BACKEND}/auth/update/${id}/`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(params),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const res = await response.json();
+
+            console.log("response actualizarPerfil:", res);
+            if (res.message == "UPDATE_OK") {
+                localStorage.setItem("user", JSON.stringify(res.data))
+            } else {
+                throw new Error("Invalid response format");
+            }
         } catch (err) {
             throw new Error(err);
         }
@@ -112,11 +139,11 @@ const AuthProvider = ({ children }) => {
                     "Content-Type": "application/json",
                 },
             });
-    
+
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-    
+
             const doctors = await response.json();
             return doctors;
         } catch (error) {
@@ -132,11 +159,11 @@ const AuthProvider = ({ children }) => {
                     "Content-Type": "application/json",
                 }
             });
-    
+
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-    
+
             const schedule = await response.json();
             return schedule;
         } catch (error) {
@@ -148,22 +175,22 @@ const AuthProvider = ({ children }) => {
         try {
             const response = await fetch(`${API_URL_BACKEND}/citas/list-events/`, {
                 method: "GET",
-                   headers: {
+                headers: {
                     "Authorization": `Token ${localStorage.getItem("token")}`,
                     "Content-Type": "application/json",
                 },
             });
-    
+
             if (response.status === 401) {
                 // Manejar el caso de no autorizado (Unauthorized)
                 throw new Error("Unauthorized: Token is invalid or expired.");
             }
-    
+
             if (!response.ok) {
                 // Manejar otros errores de HTTP
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-    
+
             const events = await response.json();
             return events;
         } catch (error) {
@@ -172,7 +199,7 @@ const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ token, user, loginAction, registerAction, logOut, listAllDoctors, requestDoctorSchedule, agendarCita, listEvents }}>
+        <AuthContext.Provider value={{ token, user, loginAction, registerAction, logOut, listAllDoctors, requestDoctorSchedule, agendarCita, listEvents, actualizarPerfil }}>
             {children}
         </AuthContext.Provider>
     );

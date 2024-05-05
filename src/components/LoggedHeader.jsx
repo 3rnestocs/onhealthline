@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppBar, Typography, Box, IconButton, Button } from '@mui/material';
-// import NotificationsIcon from '@mui/icons-material/Notifications';
+import { useEffect, useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { styled } from '@mui/system';
 import { Link } from 'react-router-dom'
@@ -48,6 +48,8 @@ const StyledIconButton = styled(IconButton)({
 });
 
 const LoggedHeader = ({ onMenuClick, onLoginClick, type }) => {
+  const userName = getUserName();
+
   return (
     <StyledAppBar position='sticky'>
       <StyledBox className='logo'>
@@ -87,7 +89,7 @@ const LoggedHeader = ({ onMenuClick, onLoginClick, type }) => {
               <StyledIconButton>
                 <Link to='/myProfile'> <AccountCircleIcon sx={{ color: '#2373a0' }} /> </Link>
               </StyledIconButton>
-              <Link to='/myProfile' style={{ textDecoration: 'none' }}> <StyledTypography variant='h6' >{getUserName()}</StyledTypography> </Link>
+              <Link to='/myProfile' style={{ textDecoration: 'none' }}> <StyledTypography variant='h6' >{userName}</StyledTypography> </Link>
             </>
           )}
         </Box>

@@ -5,6 +5,7 @@ import OTextField from '../../components/OTextField';
 import { getUser } from '../../utils/localStorageHelper';
 import { useNavigate } from 'react-router-dom';
 import profilePhoto from '../../assets/defaultProfile.png'
+import { useAuth } from '../../api/authProvider';
 
 const ContainerContent = styled(Box)({
     display: 'flex',
@@ -100,29 +101,39 @@ const StyledGrid = styled(Grid)({
 
 const MyProfile = () => {
     const navigate = useNavigate();
+    const { actualizarPerfil } = useAuth();
     const usuario = getUser();
     const [editMode, setEditMode] = useState(false);
-    const [changesMade, setChangesMade] = useState(false);
-    const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [passwordMatch, setPasswordMatch] = useState(true);
     const [passwordFieldsNotEmpty, setPasswordFieldsNotEmpty] = useState(false);
+    const [formData, setFormData] = useState({
+        first_name: usuario.first_name,
+        last_name: usuario.last_name,
+        phone: usuario.phone,
+        descripcion: usuario.descripcion,
+        address: usuario.address
+    });
 
     const handleSelectSchedule = () => {
         navigate('/select-schedule');
     };
-
+    
     const toggleEditMode = () => {
         setEditMode(!editMode);
-        setChangesMade(false);
-        console.log(usuario)
     };
-
+    
+    const handleFormChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
+    };
+    
     const applyChanges = () => {
-        setChangesMade(false);
+        actualizarPerfil(usuario.id, formData);
+        setEditMode(!editMode);
     };
-
+    
     const handleNewPasswordChange = (event) => {
         setNewPassword(event.target.value);
         setPasswordMatch(event.target.value === confirmNewPassword);
@@ -190,6 +201,7 @@ const MyProfile = () => {
                                 autoFocus
                                 disabled={!editMode} // Aquí se deshabilita el campo si editMode es falso
                                 defaultValue={usuario.first_name}
+                                onChange={handleFormChange}
                             />
                         </StyledGrid>
                         <StyledGrid item xs={6} md={6}>
@@ -204,6 +216,7 @@ const MyProfile = () => {
                                 autoFocus
                                 disabled={!editMode} // Aquí se deshabilita el campo si editMode es falso
                                 defaultValue={usuario.last_name}
+                                onChange={handleFormChange}
                             />
                         </StyledGrid>
                         <StyledGrid item xs={6} md={6}>
@@ -219,6 +232,7 @@ const MyProfile = () => {
                                 autoFocus
                                 disabled={!editMode} // Aquí se deshabilita el campo si editMode es falso
                                 defaultValue={usuario.phone}
+                                onChange={handleFormChange}
                             />
                         </StyledGrid>
                         {usuario.user_type === "PACIENTE" && (
@@ -233,11 +247,12 @@ const MyProfile = () => {
                                     autoFocus
                                     disabled={!editMode} // Aquí se deshabilita el campo si editMode es falso
                                     defaultValue={usuario.address}
+                                    onChange={handleFormChange}
                                 />
                             </StyledGrid>
                         )}
                         <StyledGrid item xs={6} md={6}>
-                            <StyledButton disabled={!editMode} fullWidth>Aplicar Cambios</StyledButton>
+                            <StyledButton disabled={!editMode} fullWidth onClick={applyChanges}>Aplicar Cambios</StyledButton>
                         </StyledGrid>
                     </Grid>
                 </StyledBox>
@@ -299,9 +314,9 @@ const MyProfile = () => {
                                     inputType="text"
                                     name="descripcion"
                                     value={usuario.descripcion}
-                                    // onChange={handleFormChange}
                                     disabled={!editMode}
                                     defaultValue={usuario.descripcion}
+                                    onChange={handleFormChange}
                                 />
                                 <StyledButton sx={{ height: '30px', mt: 5 }} onClick={handleSelectSchedule}>Agregar horarios</StyledButton>
                             </>
