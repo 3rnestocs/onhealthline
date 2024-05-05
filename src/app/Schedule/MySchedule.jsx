@@ -84,7 +84,7 @@ const MySchedule = () => {
                 <TableCell sx={{ textAlign: 'center', color: '#1F9254' }}>{row.estado}Agendado</TableCell>
                 <TableCell sx={{ textAlign: 'center' }}>{row.start_at}</TableCell>
                 <TableCell sx={{ textAlign: 'center' }}>
-                  <a href={row.url}>
+                  <a href={row.google_meet_link} target='_blank'>
                   <StyledButton variant="contained" sx>
                     Unirse a consulta
                   </StyledButton>
