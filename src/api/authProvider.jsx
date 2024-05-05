@@ -198,8 +198,32 @@ const AuthProvider = ({ children }) => {
         }
     };
 
+    const resetPassword = async (data) => {
+        try {
+            const response = await fetch(`${API_URL_BACKEND}/auth/password/reset/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const res = await response.json();
+
+            // Manejar la respuesta del servidor según tus necesidades
+            console.log("Response from password reset:", res);
+
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ token, user, loginAction, registerAction, logOut, listAllDoctors, requestDoctorSchedule, agendarCita, listEvents, actualizarPerfil }}>
+        <AuthContext.Provider value={{ token, user, loginAction, registerAction, logOut, listAllDoctors, requestDoctorSchedule, agendarCita, listEvents, actualizarPerfil,resetPassword }}>
             {children}
         </AuthContext.Provider>
     );

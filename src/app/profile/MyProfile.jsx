@@ -101,13 +101,14 @@ const StyledGrid = styled(Grid)({
 
 const MyProfile = () => {
     const navigate = useNavigate();
-    const { actualizarPerfil } = useAuth();
+    const { actualizarPerfil,resetPassword } = useAuth();
     const usuario = getUser();
     const [editMode, setEditMode] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [passwordMatch, setPasswordMatch] = useState(true);
     const [passwordFieldsNotEmpty, setPasswordFieldsNotEmpty] = useState(false);
+
     const [formData, setFormData] = useState({
         first_name: usuario.first_name,
         last_name: usuario.last_name,
@@ -144,6 +145,15 @@ const MyProfile = () => {
         setConfirmNewPassword(event.target.value);
         setPasswordMatch(event.target.value === newPassword);
         setPasswordFieldsNotEmpty(event.target.value !== '' && newPassword !== '');
+    };
+
+    const handleChangePassword = async () => {
+        try {
+            await resetPassword({ user: usuario.id, password: newPassword }); // Aquí se llama a resetPassword con el nuevo password
+            console.log('Contraseña cambiada exitosamente');
+        } catch (error) {
+            console.error('Error al cambiar la contraseña:', error);
+        }
     };
 
     return (
@@ -299,7 +309,7 @@ const MyProfile = () => {
                                 error={!passwordMatch}
                                 helperText={!passwordMatch && "Las contraseñas no coinciden"}
                             />
-                            <StyledButton sx={{ width: '100%', height: '30px' }} disabled={!passwordMatch || !passwordFieldsNotEmpty}>Cambiar Contraseña</StyledButton>
+                            <StyledButton sx={{ width: '100%', height: '30px' }} disabled={!passwordMatch || !passwordFieldsNotEmpty} onClick={handleChangePassword}>Cambiar Contraseña</StyledButton>
                         </Box>
                     </StyledBox>
                     <Grid item xs sm={6} sx={{ display: 'flex', flexDirection: 'column' }}>
