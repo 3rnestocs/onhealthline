@@ -88,8 +88,9 @@ const MySchedule = () => {
                   <StyledButton variant="contained" sx onClick={() => window.open(row.google_meet_link, '_blank')}>
                     Unirse a consulta
                   </StyledButton>
-                 
-                  
+                  <StyledButton variant="contained" sx onClick={() => window.open(row.google_calendar_event_id, '_blank')}>
+                    ver en google Calendar
+                  </StyledButton>
                   <StyledButton variant="contained" sx>
                     Cancelar
                   </StyledButton>
